@@ -8,15 +8,18 @@ export const Sidebar = () => {
       name: "Dashboard",
       link: "/serviceprovider/dashboard",
       img: "feather icon-home",
-      element: "nav-item pcoded-menu-caption",
+      class: "nav-item pcoded-menu-caption",
       compname: "Navigation",
     },
     {
       name: "Add Service",
       link: "/serviceprovider/addservice",
       img: "feather icon-box",
-      element: "nav-item pcoded-menu-caption",
-      compname: "UI Element",
+    },
+    {
+      name: "Service List",
+      link: "/serviceprovider/servicelist",
+      img: "feather icon-server",
     },
   ];
   const userLinks = [
@@ -48,7 +51,7 @@ export const Sidebar = () => {
                 ? serviceProviderLinks.map((servpro) => {
                     return (
                       <ul>
-                        <li className={servpro.element}>
+                        <li className={servpro.class}>
                           <label>{servpro.compname}</label>
                         </li>
                         <li

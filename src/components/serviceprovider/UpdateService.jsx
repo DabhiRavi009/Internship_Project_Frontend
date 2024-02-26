@@ -1,14 +1,37 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-export const AddService = () => {
+export const UpdateService = () => {
+  const id = useParams().id;
+  const Navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm();
+  } = useForm({
+    defaultValues: async () => {
+      const res = await axios.get(
+        "http://localhost:1000/services/service/" + id
+      );
+      return {
+        Service_Name: res.data.data.Service_Name,
+        service_provider: res.data.data.Name,
+        category: res.data.data.Name,
+        sub_category: res.data.data.Name,
+        type: res.data.data.Name,
+        Fees: res.data.data.Fees,
+        Area: res.data.data.Area,
+        City: res.data.data.City,
+        State: res.data.data.State,
+      };
+    },
+  });
 
   const [category, setcategory] = useState([]);
   const [subcategory, setsubcategory] = useState([]);
@@ -16,12 +39,28 @@ export const AddService = () => {
   const [serviceprovider, setServiceProvider] = useState([]);
 
   const submitHandler = async (data) => {
-    // console.log(data);
-    const res = await axios.post(
-      "http://localhost:1000/services/service",
-      data
-    );
-    console.log(res.data.data);
+    try {
+      const res = await axios.put(
+        "http://localhost:1000/services/service/" + id,
+        data
+      );
+      if (res.status === 200) {
+        toast.success(" Service Updated Successfully !", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        Navigate("/serviceprovider/servicelist");
+        console.log(res.data.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const loadCategory = async () => {
@@ -67,11 +106,23 @@ export const AddService = () => {
 
   return (
     <div className="service-list-container">
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       <div className="auth-wrapper">
         <div className="auth-content">
           <div className="card">
             <div className="card-body text-center">
-              <h3 className="mb-4">Add Service</h3>
+              <h3 className="mb-4">Update Service</h3>
 
               <form onSubmit={handleSubmit(submitHandler)}>
                 <div className="input-group mb-3">
@@ -458,7 +509,7 @@ export const AddService = () => {
                 <div>
                   <input
                     type="submit"
-                    value="Submit"
+                    value="Update"
                     className="btn btn-info"
                   ></input>
                 </div>

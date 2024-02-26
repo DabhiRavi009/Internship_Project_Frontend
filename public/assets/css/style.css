@@ -182,6 +182,7 @@ strong {
 }
 p.text-muted {
   font-size: 13px;
+  text-align: center;
 }
 
 .card {
@@ -476,6 +477,11 @@ p.text-muted {
 /* Example tabbable tabs */
 .bd-example-tabs .nav-tabs {
   margin-bottom: 1rem;
+}
+
+.service-list-container {
+  margin-left: 250px; /* Adjust this value based on your sidebar width */
+  padding: 20px; /* Adjust padding as needed */
 }
 
 /* Code snippets */
@@ -9269,7 +9275,7 @@ table.footable-paging-center > tfoot > tr.footable-paging > td {
 }
 .auth-wrapper .auth-content {
   position: relative;
-  width: 390px;
+  width: 500px;
   padding: 15px;
   z-index: 5;
 }
@@ -9580,11 +9586,14 @@ a.btn-theme.active {
   color: #fff;
   background-color: #04a9f5;
   border-color: #04a9f5;
+  margin-top: 20px;
+  margin-left: 200px;
 }
 .btn-primary:hover {
   color: #fff;
   background-color: #038fcf;
   border-color: #0386c3;
+ 
 }
 .btn-primary.disabled,
 .btn-primary:disabled {
