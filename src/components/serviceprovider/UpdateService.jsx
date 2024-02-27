@@ -55,6 +55,7 @@ export const UpdateService = () => {
           progress: undefined,
           theme: "colored",
         });
+        reset();
         Navigate("/serviceprovider/servicelist");
         console.log(res.data.data);
       }

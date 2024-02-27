@@ -1,8 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const AddService = () => {
+  const Navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -16,11 +20,24 @@ export const AddService = () => {
   const [serviceprovider, setServiceProvider] = useState([]);
 
   const submitHandler = async (data) => {
-    // console.log(data);
     const res = await axios.post(
       "http://localhost:1000/services/service",
       data
     );
+    if (res.status === 200) {
+      toast.info(" Service Added Successfully !", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      reset();
+      Navigate("/serviceprovider/servicelist");
+    }
     console.log(res.data.data);
   };
 
@@ -67,6 +84,18 @@ export const AddService = () => {
 
   return (
     <div className="service-list-container">
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       <div className="auth-wrapper">
         <div className="auth-content">
           <div className="card">

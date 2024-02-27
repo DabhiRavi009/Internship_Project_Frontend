@@ -10,6 +10,7 @@ import { SignUp } from "./components/SignUp";
 import { ProtectedRoutes } from "./components/hooks/ProtectedRoutes";
 import { ServiceList } from "./components/serviceprovider/ServiceList";
 import { UpdateService } from "./components/serviceprovider/UpdateService";
+import { AddServiceProvider } from "./components/serviceprovider/AddServiceProvider";
 
 function App() {
   const path = window.location.pathname;
@@ -46,6 +47,10 @@ function App() {
             <Route
               path="/serviceprovider/servicelist"
               element={<ServiceList />}
+            ></Route>
+            <Route
+              path="/serviceprovider/addserviceprovider"
+              element={<AddServiceProvider />}
             ></Route>
 
             <Route

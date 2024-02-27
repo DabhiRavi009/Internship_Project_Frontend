@@ -9,7 +9,7 @@ export const Sidebar = () => {
       link: "/serviceprovider/dashboard",
       img: "feather icon-home",
       class: "nav-item pcoded-menu-caption",
-      compname: "Navigation",
+      compname: "Service Provider",
     },
     {
       name: "Add Service",
@@ -20,6 +20,11 @@ export const Sidebar = () => {
       name: "Service List",
       link: "/serviceprovider/servicelist",
       img: "feather icon-server",
+    },
+    {
+      name: "Add Service Provider",
+      link: "/serviceprovider/addserviceprovider",
+      img: "feather icon-box",
     },
   ];
   const userLinks = [
