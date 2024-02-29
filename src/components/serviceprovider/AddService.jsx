@@ -20,10 +20,23 @@ export const AddService = () => {
   const [serviceprovider, setServiceProvider] = useState([]);
 
   const submitHandler = async (data) => {
+    var formData = new FormData();
+    formData.append("Service_Name", data.Service_Name);
+    formData.append("category", data.category);
+    formData.append("sub_category", data.sub_category);
+    formData.append("type", data.type);
+    formData.append("Fees", data.Fees);
+    formData.append("Area", data.Area);
+    formData.append("City", data.City);
+    formData.append("State", data.State);
+    formData.append("service_provider", data.service_provider);
+    formData.append("myImage", data.myImage[0]);
+
     const res = await axios.post(
       "http://localhost:1000/services/service",
-      data
+      formData
     );
+    console.log("res", res.data);
     if (res.status === 200) {
       toast.info(" Service Added Successfully !", {
         position: "top-center",
@@ -482,6 +495,19 @@ export const AddService = () => {
                       );
                     })}
                   </select>
+                </div>
+
+                <div className="input-group mb-3">
+                  <input
+                    type="file"
+                    name="myImage"
+                    {...register("myImage")}
+                    className="form-control"
+                    placeholder="Choose File..."
+                  ></input>
+                  {serviceprovider?.map((serv) => {
+                    return <img src={serv.imageUrl}></img>;
+                  })}
                 </div>
 
                 <div>

@@ -74,6 +74,7 @@ export const ServiceList = () => {
                 <th scope="col">Area</th>
                 <th scope="col">City</th>
                 <th scope="col">State</th>
+                <th scope="col">File</th>
                 <th scope="col">Action</th>
               </tr>
             </MDBTableHead>
@@ -90,6 +91,7 @@ export const ServiceList = () => {
                     <td>{serv.Area}</td>
                     <td>{serv.City}</td>
                     <td>{serv.State}</td>
+                    <td>{serv.imageUrl}</td>
                     <td>
                       <button
                         className="btn btn-danger"
