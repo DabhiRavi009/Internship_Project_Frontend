@@ -1,11 +1,12 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export const Login = () => {
+  const [role, setRole] = useState([]);
   const Navigate = useNavigate();
   const {
     register,
@@ -14,56 +15,95 @@ export const Login = () => {
     reset,
   } = useForm();
 
+  const loadRole = async () => {
+    const res = await axios.get("http://localhost:1000/roles/role");
+    console.log(res.data.data);
+    setRole(res.data.data);
+  };
+
   const submitHandler = async (data) => {
     console.log(data);
     try {
-      const res = await axios.post(
-        "http://localhost:1000/serviceproviders/serviceprovider/login",
-        data
-      );
-      console.log(res.status);
-      if (res.status === 200) {
-        toast.success(" Successfully Login !", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-        console.log("Login Sucess");
-        Navigate("/serviceprovider/dashboard");
-        console.log(res.data.data);
-        localStorage.setItem("Id", res.data.data._id);
+      const selectedRole = data.role;
+      console.log(selectedRole);
+      if (selectedRole === "user") {
+        const res = await axios.post(
+          "http://localhost:1000/users/user/login",
+          data
+        );
+        console.log(res.status);
+        if (res.status === 200) {
+          toast.success("User Successfully Login !", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+          console.log("User Login Sucess");
+          window.location.pathname = "/user/dashboard";
+          console.log(res.data.data);
+          localStorage.setItem("Id", res.data.data._id);
+        } else {
+          toast.error("User Login Failed!", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+          console.log("User Login failed");
+        }
       } else {
-        toast.error("Login Failed!", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-        console.log("Login failed");
+        const res = await axios.post(
+          "http://localhost:1000/serviceproviders/serviceprovider/login",
+          data
+        );
+        console.log(res.status);
+        if (res.status === 200) {
+          toast.success("Service Provider Successfully Login !", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+          console.log("Service Provider Login Sucess");
+          window.location.pathname = "/serviceprovider/dashboard";
+          console.log(res.data.data);
+          localStorage.setItem("Id", res.data.data._id);
+        } else {
+          toast.error("Login Failed!", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+          console.log("Login failed");
+        }
       }
     } catch (error) {
       console.error("An error occurred:", error);
-      toast.error("An error occurred. Please try again later.", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
     }
   };
+
+  useEffect(() => {
+    loadRole();
+  }, []);
+
   return (
     <>
       <ToastContainer
@@ -112,6 +152,28 @@ export const Login = () => {
                     placeholder="Enter Your Password..."
                   />
                 </div>
+
+                <div className="input-group mb-4">
+                  <select
+                    name="role"
+                    {...register("role")}
+                    className="form-control"
+                    placeholder="Select Your Role..."
+                  >
+                    <option>Select Role</option>
+                    <option>user</option>
+                    <option>service_provider</option>
+
+                    {/* {role?.map((role) => {
+                      return (
+                        <>
+                          <option value={role._id}>{role.Name}</option>
+                        </>
+                      );
+                    })} */}
+                  </select>
+                </div>
+
                 <div className="form-group text-left">
                   <div className="checkbox checkbox-fill d-inline">
                     <input

@@ -31,8 +31,27 @@ export const Sidebar = () => {
     {
       name: "Dashboard",
       link: "/user/dashboard",
+      img: "feather icon-home",
+      class: "nav-item pcoded-menu-caption",
+      compname: "User",
+    },
+    {
+      name: "Add User",
+      link: "/user/adduser",
+      img: "feather icon-box",
+    },
+    {
+      name: "User List",
+      link: "/user/userlist",
+      img: "feather icon-server",
+    },
+    {
+      name: "All Services",
+      link: "/user/allservices",
+      img: "feather icon-server",
     },
   ];
+
   return (
     <div>
       <nav className="pcoded-navbar">
@@ -73,19 +92,24 @@ export const Sidebar = () => {
                       </ul>
                     );
                   })
-                : userLinks.map((u) => {
+                : userLinks?.map((u) => {
                     return (
-                      <li
-                        data-username="dashboard Default Ecommerce CRM Analytics Crypto Project"
-                        className="nav-item active"
-                      >
-                        <Link to={u.link} className="nav-link ">
-                          <span className="pcoded-micon">
-                            <i className="feather icon-home" />
-                          </span>
-                          <span className="pcoded-mtext">{u.name}</span>
-                        </Link>
-                      </li>
+                      <ul>
+                        <li className={u.class}>
+                          <label>{u.compname}</label>
+                        </li>
+                        <li
+                          data-username="dashboard Default Ecommerce CRM Analytics Crypto Project"
+                          className="nav-item active"
+                        >
+                          <Link to={u.link} className="nav-link ">
+                            <span className="pcoded-micon">
+                              <i className={u.img} />
+                            </span>
+                            <span className="pcoded-mtext">{u.name}</span>
+                          </Link>
+                        </li>
+                      </ul>
                     );
                   })}
             </ul>

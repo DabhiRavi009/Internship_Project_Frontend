@@ -6,7 +6,7 @@ const useAuth = () => {
   const [isAuthenticated, setisAuthenticated] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem("id") != null) {
+    if (localStorage.getItem("Id") !== null) {
       setisAuthenticated(true);
     }
   }, []);
