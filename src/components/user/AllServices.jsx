@@ -23,7 +23,7 @@ export const AllServices = () => {
     loadService();
   }, []);
   return (
-    <div className="service-list-container">
+    <div className="service-list-container" style={{ marginLeft: "280px" }}>
       <div className="d-flex m-auto flex-wrap">
         {services?.map((serv, index) => {
           return (
@@ -40,14 +40,25 @@ export const AllServices = () => {
             >
               <img src={serv.imageUrl} className="card-img-top" alt="" />
               <div className="card-body">
-                <h4>{serv.Service_Name}</h4>
-                <h6>{serv.category.Name}</h6>
-                <h6>{serv.sub_category.Name}</h6>
-                <h6>{serv.type.Name}</h6>
-                <h3>{serv.Fees}</h3>
-                <button className="btn btn-info" style={{ marginLeft: "80px" }}>
-                  Detail
-                </button>
+                <div className="card-title d-flex justify-content-between mb-10">
+                  <h4 className="text-muted mb-0">{serv.Service_Name}</h4>
+                  <h4 className="mb-0">{serv.Fees}</h4>
+                </div>
+
+                <div
+                  className="rounded-bottom"
+                  style={{ backgroundColor: "#eee" }}
+                >
+                  <div className="card-body">
+                    <div className="form-outline mb-2">
+                      <p>{serv.category.Name}</p>
+                      <p>{serv.sub_category.Name}</p>
+                      <p>{serv.type.Name}</p>
+                    </div>
+
+                    <button className="btn btn-info btn-block">Detail</button>
+                  </div>
+                </div>
               </div>
             </div>
           );

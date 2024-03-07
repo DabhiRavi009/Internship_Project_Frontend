@@ -24,35 +24,64 @@ export const FeatchService = () => {
   }, []);
   return (
     <div className="service-list-container">
-      <div
-        className="d-flex m-auto flex-wrap"
-        style={{
-          width: "25rem",
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        {service?.map((serv) => {
-          return (
-            <div className="card">
-              <img src={serv.imageUrl} className="card-img-top" alt="" />
-              <div className="card-body" style={{ textAlign: "center" }}>
-                <h2 style={{ textTransform: "uppercase" }}>
-                  {serv.Service_Name}
-                </h2>
-                <h6>Category : {serv.category.Name}</h6>
-                <h6>Sub Category : {serv.sub_category.Name}</h6>
-                <h6>Type: {serv.type.Name}</h6>
-                <h6>Area: {serv.Area}</h6>
-                <h6>City: {serv.City}</h6>
-                <h6>State: {serv.State}</h6>
-                <h3>{serv.Fees}</h3>
-                <button className="btn btn-info">Book Service</button>
+      <section>
+        <div className="container py-5">
+          <div className="row d-flex justify-content-center">
+            <div className="col-md-9 col-lg-7 col-xl-5">
+              <div className="card">
+                {service?.map((serv) => {
+                  return (
+                    <>
+                      <img
+                        src={serv.imageUrl}
+                        className="card-img-top"
+                        alt=""
+                      />
+                      <div className="card-body">
+                        <div className="card-title d-flex justify-content-between mb-0">
+                          <h3 className="text-muted mb-0">
+                            {serv.Service_Name}
+                          </h3>
+                          <h3 className="mb-0">{serv.Fees}</h3>
+                        </div>
+                      </div>
+                      <div
+                        className="rounded-bottom"
+                        style={{ backgroundColor: "#eee" }}
+                      >
+                        <div className="card-body">
+                          <h4 className="mb-4" style={{ textAlign: "center" }}>
+                            Your Service details
+                          </h4>
+                          <div className="form-outline mb-3">
+                            <p>{serv.category.Name}</p>
+                            <p>{serv.sub_category.Name}</p>
+                            <p>{serv.type.Name}</p>
+                            <p>{serv.Area}</p>
+                            <p>{serv.City}</p>
+                            <p>{serv.State}</p>
+                          </div>
+                          <div className="row mb-3">
+                            <div className="col-6">
+                              <div className="form-outline"></div>
+                            </div>
+                            <div className="col-6">
+                              <div className="form-outline"></div>
+                            </div>
+                          </div>
+                          <button className="btn btn-info btn-block">
+                            Book Service
+                          </button>
+                        </div>
+                      </div>
+                    </>
+                  );
+                })}
               </div>
             </div>
-          );
-        })}
-      </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };

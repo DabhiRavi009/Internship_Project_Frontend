@@ -15,6 +15,7 @@ import { AddUser } from "./components/user/AddUser";
 import { UserList } from "./components/user/UserList";
 import { AllServices } from "./components/user/AllServices";
 import { FeatchService } from "./components/user/FeatchService";
+import { Payment } from "./components/Payment";
 
 function App() {
   const path = window.location.pathname;
@@ -65,6 +66,7 @@ function App() {
               <Route path="/user/adduser" element={<AddUser />}></Route>
               <Route path="/user/userlist" element={<UserList />}></Route>
               <Route path="/user/allservices" element={<AllServices />}></Route>
+              <Route path="/payment" element={<Payment />}></Route>
               <Route
                 path="/user/featchservice/:id"
                 element={<FeatchService />}
