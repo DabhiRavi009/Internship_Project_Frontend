@@ -53,11 +53,11 @@ export const AddUser = () => {
               <form onSubmit={handleSubmit(submitHandler)}>
                 <div className="input-group mb-3">
                   <input
-                    name="User_Name"
-                    {...register("User_Name")}
+                    name="Name"
+                    {...register("Name")}
                     type="text"
                     className="form-control"
-                    placeholder="Enter User Name..."
+                    placeholder="Enter Name..."
                   />
                 </div>
                 <div className="input-group mb-3">

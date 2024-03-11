@@ -33,8 +33,8 @@ export const Login = () => {
         );
         console.log(res.status);
         if (res.status === 200) {
-          toast.success("User Successfully Login !", {
-            position: "top-center",
+          toast.info("User Successfully Login !", {
+            position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
             closeOnClick: true,
@@ -49,7 +49,7 @@ export const Login = () => {
           localStorage.setItem("Id", res.data.data._id);
         } else {
           toast.error("User Login Failed!", {
-            position: "top-center",
+            position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
             closeOnClick: true,
@@ -67,8 +67,8 @@ export const Login = () => {
         );
         console.log(res.status);
         if (res.status === 200) {
-          toast.success("Service Provider Successfully Login !", {
-            position: "top-center",
+          toast.info("Service Provider Successfully Login !", {
+            position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
             closeOnClick: true,
@@ -175,23 +175,10 @@ export const Login = () => {
                 </div>
 
                 <div className="form-group text-left">
-                  <div className="checkbox checkbox-fill d-inline">
-                    <input
-                      {...register("checkbox-fill-1")}
-                      type="checkbox"
-                      name="checkbox-fill-1"
-                      id="checkbox-fill-a1"
-                      defaultChecked=""
-                    />
-                    <label htmlFor="checkbox-fill-a1" className="cr">
-                      {" "}
-                      Save Details
-                    </label>
-                  </div>
-
                   <button
                     className="btn btn-primary shadow-2 mb-4"
                     type="submit"
+                    style={{ marginLeft: "160px" }}
                     value="Login"
                   >
                     Login

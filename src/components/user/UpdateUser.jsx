@@ -1,76 +1,66 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export const SignUp = () => {
-  const [role, setRole] = useState([]);
+export const UpdateUser = () => {
+  const id = useParams().id;
+
   const Navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
-    formState: { error },
+    formState: { errors },
     reset,
-  } = useForm();
+  } = useForm({
+    defaultValues: async () => {
+      const res = await axios.get("http://localhost:1000/users/user/" + id);
+      return {
+        Name: res.data.data.Name,
+        Password: res.data.data.Password,
+        Email: res.data.data.Email,
+        Contact: res.data.data.Contact,
+        // role: res.data.data.Name,
+      };
+    },
+  });
+
+  const [role, setRole] = useState([]);
+
+  const submitHandler = async (data) => {
+    try {
+      const res = await axios.put(
+        "http://localhost:1000/users/user/" + id,
+        data
+      );
+      if (res.status === 200) {
+        toast.info(" User Updated Successfully!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        reset();
+        Navigate("/user/userlist");
+        console.log(res.data.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const loadRole = async () => {
     const res = await axios.get("http://localhost:1000/roles/role");
     console.log(res.data.data);
     setRole(res.data.data);
-  };
-
-  const submitHandler = async (data) => {
-    console.log("Form data:", data);
-    try {
-      const selectedRole = data.role;
-      console.log("Selected role:", selectedRole);
-      if (selectedRole === "65e560b6d2104a950a65ac77") {
-        const res = await axios.post("http://localhost:1000/users/user", data);
-        console.log(res.status);
-        if (res.status === 200) {
-          toast.info("User Registered Sucessfully !", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          console.log("User Registered Sucessfully");
-          window.location.pathname = "/";
-          console.log(res.data.data);
-          localStorage.setItem("Id", res.data.data._id);
-        }
-      } else if (selectedRole === "65e560d7d2104a950a65b168") {
-        const res = await axios.post(
-          "http://localhost:1000/serviceproviders/serviceprovider",
-          data
-        );
-        console.log(res.data.data);
-        if (res.status === 200) {
-          toast.info(" Service Provider Registered Successfully !", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          console.log("Service Provider Registered Sucessfully");
-          window.location.pathname = "/";
-          console.log(res.data.data);
-          localStorage.setItem("Id", res.data.data._id);
-        }
-      }
-    } catch (error) {
-      console.error("An error occurred:", error);
-    }
   };
 
   useEffect(() => {
@@ -80,7 +70,7 @@ export const SignUp = () => {
   return (
     <>
       <ToastContainer
-        position="top-center"
+        position="top-right"
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
@@ -91,21 +81,11 @@ export const SignUp = () => {
         pauseOnHover
         theme="colored"
       />
-
       <div className="auth-wrapper">
         <div className="auth-content">
-          <div className="auth-bg">
-            <span className="r" />
-            <span className="r s" />
-            <span className="r s" />
-            <span className="r" />
-          </div>
           <div className="card">
             <div className="card-body text-center">
-              <div className="mb-4">
-                <i className="feather icon-unlock auth-icon" />
-              </div>
-              <h3 className="mb-4">Sign Up</h3>
+              <h3 className="mb-4">Update User</h3>
               <form onSubmit={handleSubmit(submitHandler)}>
                 <div className="input-group mb-3">
                   <input
@@ -116,7 +96,6 @@ export const SignUp = () => {
                     placeholder="Enter Name..."
                   />
                 </div>
-
                 <div className="input-group mb-3">
                   <input
                     name="Password"
@@ -126,7 +105,6 @@ export const SignUp = () => {
                     placeholder="Enter Password..."
                   />
                 </div>
-
                 <div className="input-group mb-3">
                   <input
                     name="Email"
@@ -136,7 +114,6 @@ export const SignUp = () => {
                     placeholder="Enter Email..."
                   />
                 </div>
-
                 <div className="input-group mb-3">
                   <input
                     name="Contact"
@@ -154,7 +131,6 @@ export const SignUp = () => {
                     placeholder="Select Role..."
                   >
                     <option>Select Role</option>
-
                     {role?.map((role) => {
                       return (
                         <>
@@ -164,19 +140,12 @@ export const SignUp = () => {
                     })}
                   </select>
                 </div>
-
-                <div className="form-group text-left">
-                  <button
-                    className="btn btn-primary shadow-2 mb-4"
+                <div>
+                  <input
                     type="submit"
-                    style={{ marginLeft: "160px" }}
-                    value="submit"
-                  >
-                    Register
-                  </button>
-                  <p className="mb-0 text-muted">
-                    Already have an account? <Link to="/">Login</Link>
-                  </p>
+                    value="Update"
+                    className="btn btn-info"
+                  ></input>
                 </div>
               </form>
             </div>

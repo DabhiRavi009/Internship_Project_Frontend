@@ -16,6 +16,8 @@ import { UserList } from "./components/user/UserList";
 import { AllServices } from "./components/user/AllServices";
 import { FeatchService } from "./components/user/FeatchService";
 import { Payment } from "./components/Payment";
+import { UpdateUser } from "./components/user/UpdateUser";
+import { Error } from "./components/Error";
 
 function App() {
   const path = window.location.pathname;
@@ -40,6 +42,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Login />}></Route>
             <Route path="/signup" element={<SignUp />}></Route>
+            <Route path="/*" element={<Error />}></Route>
             <Route element={<ProtectedRoutes />}>
               <Route
                 path="/serviceprovider/dashboard"
@@ -53,20 +56,21 @@ function App() {
                 path="/serviceprovider/servicelist"
                 element={<ServiceList />}
               ></Route>
-              <Route
+              {/* <Route
                 path="/serviceprovider/addserviceprovider"
                 element={<AddServiceProvider />}
-              ></Route>
+              ></Route> */}
               <Route
                 path="/serviceprovider/update/:id"
                 element={<UpdateService />}
               ></Route>
 
               <Route path="/user/dashboard" element={<UserDashboard />}></Route>
-              <Route path="/user/adduser" element={<AddUser />}></Route>
+              {/* <Route path="/user/adduser" element={<AddUser />}></Route> */}
               <Route path="/user/userlist" element={<UserList />}></Route>
               <Route path="/user/allservices" element={<AllServices />}></Route>
-              <Route path="/payment" element={<Payment />}></Route>
+              <Route path="/user/update/:id" element={<UpdateUser />}></Route>
+              <Route path="/payment/:id" element={<Payment />}></Route>
               <Route
                 path="/user/featchservice/:id"
                 element={<FeatchService />}

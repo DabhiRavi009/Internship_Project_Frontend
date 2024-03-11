@@ -45,8 +45,8 @@ export const UpdateService = () => {
         data
       );
       if (res.status === 200) {
-        toast.success(" Service Updated Successfully !", {
-          position: "top-center",
+        toast.info(" Service Updated Successfully!", {
+          position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,

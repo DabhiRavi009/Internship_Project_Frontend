@@ -19,11 +19,41 @@ export const AllServices = () => {
     Navigate(`/user/featchservice/${id}`);
   };
 
+  const searchHandler = async (e) => {
+    try {
+      const res = await axios.get(
+        "http://localhost:1000/services/servicefilter",
+        {
+          params: {
+            Service_Name: e.target.value,
+          },
+        }
+      );
+      console.log("res in searchHandler", res.data.data);
+      setservices(res.data.data);
+    } catch (err) {
+      setservices([]);
+    }
+  };
   useEffect(() => {
     loadService();
   }, []);
   return (
     <div className="service-list-container" style={{ marginLeft: "280px" }}>
+      <div>
+        <div className="form-outline" data-mdb-input-init="">
+          <input
+            type="search"
+            className="form-control"
+            placeholder="Search Service"
+            style={{ marginBottom: "20px", width: "99%" }}
+            aria-label="Search"
+            onChange={(e) => {
+              searchHandler(e);
+            }}
+          />
+        </div>
+      </div>
       <div className="d-flex m-auto flex-wrap">
         {services?.map((serv, index) => {
           return (

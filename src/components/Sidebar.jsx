@@ -21,11 +21,6 @@ export const Sidebar = () => {
       link: "/serviceprovider/servicelist",
       img: "feather icon-server",
     },
-    {
-      name: "Add Service Provider",
-      link: "/serviceprovider/addserviceprovider",
-      img: "feather icon-box",
-    },
   ];
   const userLinks = [
     {
@@ -34,11 +29,6 @@ export const Sidebar = () => {
       img: "feather icon-home",
       class: "nav-item pcoded-menu-caption",
       compname: "User",
-    },
-    {
-      name: "Add User",
-      link: "/user/adduser",
-      img: "feather icon-box",
     },
     {
       name: "User List",

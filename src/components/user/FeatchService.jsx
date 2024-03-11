@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export const FeatchService = () => {
+  const Navigate = useNavigate();
   const [service, setservice] = useState([]);
   const id = useParams().id;
   const loadServiceById = async () => {
@@ -69,7 +70,12 @@ export const FeatchService = () => {
                               <div className="form-outline"></div>
                             </div>
                           </div>
-                          <button className="btn btn-info btn-block">
+                          <button
+                            className="btn btn-info btn-block"
+                            onClick={() => {
+                              Navigate(`/payment/${id}`);
+                            }}
+                          >
                             Book Service
                           </button>
                         </div>
