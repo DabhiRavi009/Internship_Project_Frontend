@@ -75,19 +75,8 @@ export const AllServices = () => {
                   <h4 className="mb-0">{serv.Fees}</h4>
                 </div>
 
-                <div
-                  className="rounded-bottom"
-                  style={{ backgroundColor: "#eee" }}
-                >
-                  <div className="card-body">
-                    <div className="form-outline mb-2">
-                      <p>{serv.category.Name}</p>
-                      <p>{serv.sub_category.Name}</p>
-                      <p>{serv.type.Name}</p>
-                    </div>
-
-                    <button className="btn btn-info btn-block">Detail</button>
-                  </div>
+                <div>
+                  <button className="btn btn-info btn-block">Detail</button>
                 </div>
               </div>
             </div>

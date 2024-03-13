@@ -1,139 +1,133 @@
-import React from "react";
-// import "./Payment.css";
-import { useForm } from "react-hook-form";
-// import Payment_Schema from "./UserSchema";
-// import { yupResolver } from "@hookform/resolvers/yup";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import "./Payment.css";
 
 export const Payment = () => {
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-  } = useForm();
+  const [bookservice, setBookService] = useState([]);
+  const Navigate = useNavigate();
   const id = useParams().id;
 
-  const submitHandler = (data) => {
-    // try{
-    // const res = await axios.put(
-    //   `http://localhost:1000/bookservices/bookservice/${id}`,
-    //   { Status: "Done" }
-    // );
-    // console.log("id..",id)
-    // if (res.status === 200) {
-    //   console.log("data Updeted");
-    // }
-    // else {
-    //   alert("Data not updated");
-    // }
-    console.log(data);
-    // }catch(error){
-    //   console.log(error)
-    // }
+  const loadBookServiceById = async () => {
+    try {
+      const res = await axios.get(
+        "http://localhost:1000/bookservices/bookservice/" + id
+      );
+      console.log(res.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    loadBookServiceById();
+  }, []);
+
+  const updateStatusService = async (id) => {
+    try {
+      const res = await axios.put(
+        "http://localhost:1000/bookservices/bookservice/" + id,
+        { Status: "Done" }
+      );
+      if (res.status === 200) {
+        alert("updated");
+        console.log("Data Updated");
+      } else {
+        console.log("Data not updated");
+      }
+    } catch (error) {
+      console.log("Error:", error);
+    }
   };
 
   return (
-    <div className="service-list-container" style={{ marginLeft: "150px" }}>
-      <section>
-        <div className="container py-5">
-          <div className="row d-flex justify-content-center">
-            <div className="col-md-9 col-lg-7 col-xl-5">
-              <div className="card" style={{ width: "600px" }}>
-                <div className="card-body">
-                  <div className="card-title d-flex justify-content-between mb-0">
-                    <h3 className="text-muted mb-0">Service Payment</h3>
+    <>
+      <div className="service-list-container">
+        <div className="container mt-5 px-5">
+          <div className="mb-4">
+            <h2>Confirm order and pay</h2>
+            <span>
+              please make the payment, after that you can enjoy all the features
+              and benefits.
+            </span>
+          </div>
+          <div className="row">
+            <div className="col-md-8">
+              <div className="card p-3">
+                <h6 className="text-uppercase">Payment details</h6>
+                <form>
+                  <div className="inputbox mt-3">
+                    {" "}
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="Name"
+                      className="form-control"
+                      required="required"
+                    />{" "}
+                    {/* <span>Name on card</span>{" "} */}
                   </div>
-                </div>
-
-                <div
-                  className="rounded-bottom"
-                  style={{ backgroundColor: "#eee" }}
-                >
-                  <div className="card-body">
-                    <div className="d-flex flex-row align-items-center mb-4 pb-1">
-                      <form onSubmit={handleSubmit(submitHandler)}>
-                        <img
-                          className="img-fluid"
-                          src="https://img.icons8.com/color/48/000000/mastercard-logo.png"
-                          style={{ padding: "20px" }}
-                        />
-                        <div className="flex-fill mx-3">
-                          <div className="form-outline">
-                            <input
-                              type="text"
-                              name="card_name"
-                              {...register("card_name")}
-                              id="formControlLgXc"
-                              className="form-control form-control-lg"
-                              placeholder="**** **** **** 3193"
-                            />
-                            <label
-                              className="form-label"
-                              htmlFor="formControlLgXc"
-                            >
-                              Card Number
-                            </label>
-                          </div>
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div className="inputbox mt-3 mr-2">
+                        {" "}
+                        <input
+                          type="text"
+                          name="name"
+                          className="form-control"
+                          placeholder="Card Number"
+                          required="required"
+                        />{" "}
+                        <i className="fa fa-credit-card" />{" "}
+                        {/* <span>Card Number</span> */}
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="d-flex flex-row">
+                        <div className="inputbox mt-3 mr-2">
+                          {" "}
+                          <input
+                            type="text"
+                            name="name"
+                            className="form-control"
+                            placeholder="Expiry"
+                            required="required"
+                          />{" "}
+                          {/* <span>Expiry</span>{" "} */}
                         </div>
-
-                        <div className="row mb-3">
-                          <div className="col-6">
-                            <div
-                              className="form-outline"
-                              style={{ padding: "20px" }}
-                            >
-                              <input
-                                name="Date"
-                                {...register("Date")}
-                                type="password"
-                                id="formControlLgExpk8"
-                                className="form-control"
-                                placeholder="MM/YYYY"
-                              />
-                              <label
-                                className="form-label"
-                                htmlFor="formControlLgExpk8"
-                              >
-                                Expire
-                              </label>
-                            </div>
-                          </div>
-                          <div className="col-6">
-                            <div
-                              className="form-outline"
-                              style={{ padding: "20px" }}
-                            >
-                              <input
-                                name="Cvv"
-                                {...register("Cvv")}
-                                type="password"
-                                id="formControlLgcvv8"
-                                className="form-control"
-                                placeholder="Cvv"
-                              />
-                              <label
-                                className="form-label"
-                                htmlFor="formControlLgcvv8"
-                              >
-                                Cvv
-                              </label>
-                            </div>
-                          </div>
+                        <div className="inputbox mt-3 mr-2">
+                          {" "}
+                          <input
+                            type="text"
+                            name="name"
+                            className="form-control"
+                            placeholder="cvv"
+                            required="required"
+                          />{" "}
+                          {/* <span>CVV</span>{" "} */}
                         </div>
-
-                        <button className="btn btn-info btn-block">
-                          Make Payment
-                        </button>
-                      </form>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </form>
+              </div>
+              <div className="mt-4 mb-4 d-flex justify-content-between">
+                <Link to="/user/allservices">
+                  <button className="btn btn-danger px-3">Back </button>
+                </Link>
+                <button
+                  className="btn btn-success px-3"
+                  onClick={() => {
+                    updateStatusService(id);
+                  }}
+                >
+                  Payment
+                </button>
               </div>
             </div>
           </div>
         </div>
-      </section>
-    </div>
+      </div>
+    </>
   );
 };
