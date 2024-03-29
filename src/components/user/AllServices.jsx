@@ -65,10 +65,17 @@ export const AllServices = () => {
               style={{
                 width: "18rem",
                 margin: "0px 30px 30px 0",
+                transform: "scale(1.05)",
+                boxShadow: "10px 10px 15px rgba(0, 0, 0, 0.3)",
               }}
               key={index}
             >
-              <img src={serv.imageUrl} className="card-img-top" alt="" />
+              <img
+                src={serv.imageUrl}
+                className="card-img-top"
+                alt=""
+                style={{ width: "100%", height: "200px" }}
+              />
               <div className="card-body">
                 <div className="card-title d-flex justify-content-between mb-10">
                   <h4 className="text-muted mb-0">{serv.Service_Name}</h4>

@@ -60,7 +60,7 @@ export const Login = () => {
           });
           console.log("User Login failed");
         }
-      } else {
+      } else if (selectedRole === "service_provider") {
         const res = await axios.post(
           "http://localhost:1000/serviceproviders/serviceprovider/login",
           data
@@ -93,6 +93,40 @@ export const Login = () => {
             theme: "colored",
           });
           console.log("Login failed");
+        }
+      } else {
+        const res = await axios.post(
+          "http://localhost:1000/admins/admin/login",
+          data
+        );
+        console.log(res.status);
+        if (res.status === 200) {
+          toast.info("Admin Successfully Login !", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+          console.log("Admin Login Sucess");
+          window.location.pathname = "/admin/dashboard";
+          console.log(res.data.data);
+          localStorage.setItem("Id", res.data.data._id);
+        } else {
+          toast.error("Admin Login Failed!", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+          console.log("Admin Login failed");
         }
       }
     } catch (error) {
@@ -163,6 +197,7 @@ export const Login = () => {
                     <option>Select Role</option>
                     <option>user</option>
                     <option>service_provider</option>
+                    <option>admin</option>
 
                     {/* {role?.map((role) => {
                       return (

@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 export const AddServiceProvider = () => {
+  const Navigate = useNavigate();
   const [role, setRole] = useState([]);
 
   const loadRole = async () => {
@@ -34,7 +36,7 @@ export const AddServiceProvider = () => {
     console.log(res.data.data);
     if (res.status === 200) {
       toast.info(" Service Provider Added Successfully !", {
-        position: "top-center",
+        position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -44,6 +46,8 @@ export const AddServiceProvider = () => {
         theme: "colored",
       });
       reset();
+      Navigate("/admin/manageserviceprovider");
+
     }
   };
   return (

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "../assest/Css/card.css";
 
 export const FeatchService = () => {
   const Navigate = useNavigate();
@@ -53,10 +56,18 @@ export const FeatchService = () => {
       );
       console.log(res.data.data);
       if (res.status === 200) {
-        alert("Service post");
+         toast.info("Service Booked !", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
         console.log("Service Booked");
         await SetId(res.data.data._id);
-        // console.log("Id in params", Id);
         Navigate(`/payment/${res.data.data._id}`);
       }
     } catch (error) {
@@ -64,7 +75,21 @@ export const FeatchService = () => {
     }
   };
   return (
+    <>
+    <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     <div className="service-list-container">
+
       {service.length === 0 ? (
         <div>Loading...</div>
       ) : (
@@ -89,6 +114,7 @@ export const FeatchService = () => {
                             <h3 className="mb-0">{serv.Fees}</h3>
                           </div>
                         </div>
+
                         <div
                           className="rounded-bottom"
                           style={{ backgroundColor: "#eee" }}
@@ -137,5 +163,6 @@ export const FeatchService = () => {
         </section>
       )}
     </div>
+    </>
   );
 };

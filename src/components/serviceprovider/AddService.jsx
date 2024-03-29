@@ -39,7 +39,7 @@ export const AddService = () => {
     console.log("res", res.data);
     if (res.status === 200) {
       toast.info(" Service Added Successfully !", {
-        position: "top-center",
+        position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,

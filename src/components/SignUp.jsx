@@ -67,6 +67,28 @@ export const SignUp = () => {
           console.log(res.data.data);
           localStorage.setItem("Id", res.data.data._id);
         }
+      } else if (selectedRole === "65fab23815d1121b0919a00a") {
+        const res = await axios.post(
+          "http://localhost:1000/admins/admin",
+          data
+        );
+        console.log(res.data.data);
+        if (res.status === 200) {
+          toast.info(" Admin Registered Successfully !", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+          console.log("Admin Registered Sucessfully");
+          window.location.pathname = "/";
+          console.log(res.data.data);
+          localStorage.setItem("Id", res.data.data._id);
+        }
       }
     } catch (error) {
       console.error("An error occurred:", error);
@@ -175,7 +197,7 @@ export const SignUp = () => {
                     Register
                   </button>
                   <p className="mb-0 text-muted">
-                    Already have an account? <Link to="/">Login</Link>
+                    Already have an account? <Link to="/login">Login</Link>
                   </p>
                 </div>
               </form>

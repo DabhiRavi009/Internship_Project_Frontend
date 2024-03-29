@@ -1,14 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export const Sidebar = () => {
-  const path = window.location.pathname;
+  const location = useLocation();
+  const path = location.pathname;
+
   const serviceProviderLinks = [
     {
-      name: "Dashboard",
+      name: "ServiceProvider Dashboard",
       link: "/serviceprovider/dashboard",
       img: "feather icon-home",
-      class: "nav-item pcoded-menu-caption",
       compname: "Service Provider",
     },
     {
@@ -21,13 +22,53 @@ export const Sidebar = () => {
       link: "/serviceprovider/servicelist",
       img: "feather icon-server",
     },
+    {
+      name: "Profile",
+      link: "/serviceprovider/profile",
+      img: "feather icon-server",
+    },
   ];
+
+  const adminLinks = [
+    {
+      name: "Admin Dashboard",
+      link: "/admin/dashboard",
+      img: "feather icon-home",
+      compname: "Admin",
+    },
+
+    {
+      name: "Manage Service",
+      link: "/admin/manageservice",
+      img: "feather icon-server",
+    },
+    {
+      name: "Manage ServiceProvider",
+      link: "/admin/manageserviceprovider",
+      img: "feather icon-server",
+    },
+    {
+      name: "Manage User",
+      link: "/admin/manageuser",
+      img: "feather icon-server",
+    },
+    {
+      name: "Bookings",
+      link: "/admin/adminbookedservice",
+      img: "feather icon-server",
+    },
+    {
+      name: "Profile",
+      link: "/admin/profile",
+      img: "feather icon-server",
+    },
+  ];
+
   const userLinks = [
     {
-      name: "Dashboard",
+      name: "User Dashboard",
       link: "/user/dashboard",
       img: "feather icon-home",
-      class: "nav-item pcoded-menu-caption",
       compname: "User",
     },
     {
@@ -40,14 +81,29 @@ export const Sidebar = () => {
       link: "/user/allservices",
       img: "feather icon-server",
     },
+    {
+      name: "Profile",
+      link: "/user/profile",
+      img: "feather icon-server",
+    },
   ];
+
+  const getSidebarLinks = () => {
+    if (path.includes("admin")) {
+      return adminLinks;
+    } else if (path.includes("serviceprovider")) {
+      return serviceProviderLinks;
+    } else {
+      return userLinks;
+    }
+  };
 
   return (
     <div>
       <nav className="pcoded-navbar">
         <div className="navbar-wrapper">
           <div className="navbar-brand header-logo">
-            <Link href="index.html" className="b-brand">
+            <Link to="/" className="b-brand">
               <div className="b-bg">
                 <i className="feather icon-trending-up" />
               </div>
@@ -61,47 +117,16 @@ export const Sidebar = () => {
 
           <div className="navbar-content scroll-div">
             <ul className="nav pcoded-inner-navbar">
-              {path.includes("serviceprovider")
-                ? serviceProviderLinks.map((servpro) => {
-                    return (
-                      <ul>
-                        <li className={servpro.class}>
-                          <label>{servpro.compname}</label>
-                        </li>
-                        <li
-                          data-username="dashboard Default Ecommerce CRM Analytics Crypto Project"
-                          className="nav-item active"
-                        >
-                          <Link to={servpro.link} className="nav-link ">
-                            <span className="pcoded-micon">
-                              <i className={servpro.img} />
-                            </span>
-                            <span className="pcoded-mtext">{servpro.name}</span>
-                          </Link>
-                        </li>
-                      </ul>
-                    );
-                  })
-                : userLinks?.map((u) => {
-                    return (
-                      <ul>
-                        <li className={u.class}>
-                          <label>{u.compname}</label>
-                        </li>
-                        <li
-                          data-username="dashboard Default Ecommerce CRM Analytics Crypto Project"
-                          className="nav-item active"
-                        >
-                          <Link to={u.link} className="nav-link ">
-                            <span className="pcoded-micon">
-                              <i className={u.img} />
-                            </span>
-                            <span className="pcoded-mtext">{u.name}</span>
-                          </Link>
-                        </li>
-                      </ul>
-                    );
-                  })}
+              {getSidebarLinks().map((link, index) => (
+                <li key={index}>
+                  <Link to={link.link} className="nav-link">
+                    <span className="pcoded-micon">
+                      <i className={link.img} />
+                    </span>
+                    <span className="pcoded-mtext">{link.name}</span>
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>

@@ -1,7 +1,9 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import "./Payment.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+// import "../components/Payment.css";
 
 export const Payment = () => {
   const [bookservice, setBookService] = useState([]);
@@ -30,7 +32,16 @@ export const Payment = () => {
         { Status: "Done" }
       );
       if (res.status === 200) {
-        alert("updated");
+        toast.info("Payment Done !", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
         console.log("Data Updated");
       } else {
         console.log("Data not updated");
@@ -42,14 +53,22 @@ export const Payment = () => {
 
   return (
     <>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       <div className="service-list-container">
         <div className="container mt-5 px-5">
           <div className="mb-4">
-            <h2>Confirm order and pay</h2>
-            <span>
-              please make the payment, after that you can enjoy all the features
-              and benefits.
-            </span>
+            <h2>Confirm Service and Pay</h2>
           </div>
           <div className="row">
             <div className="col-md-8">
@@ -87,7 +106,7 @@ export const Payment = () => {
                         <div className="inputbox mt-3 mr-2">
                           {" "}
                           <input
-                            type="text"
+                            type="password"
                             name="name"
                             className="form-control"
                             placeholder="Expiry"
@@ -98,7 +117,7 @@ export const Payment = () => {
                         <div className="inputbox mt-3 mr-2">
                           {" "}
                           <input
-                            type="text"
+                            type="password"
                             name="name"
                             className="form-control"
                             placeholder="cvv"
