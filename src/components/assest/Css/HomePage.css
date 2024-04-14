@@ -667,7 +667,7 @@ a:focus {
   padding-left: 25px;
   background-color: #ffffff;
   outline: none;
-  color: #ffffff;
+  color: black;
   -webkit-box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.2);
   box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.2);
 }
@@ -841,6 +841,3 @@ a:focus {
 .footer_section a {
   color: inherit;
 }
-
-/* end footer section*/
-/*# sourceMappingURL=style.css.map */

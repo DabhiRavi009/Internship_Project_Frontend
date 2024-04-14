@@ -5,10 +5,12 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import { Loader } from "../Loader";
 
 export const AddServiceProvider = () => {
   const Navigate = useNavigate();
   const [role, setRole] = useState([]);
+  const [isLoading, setisLoading] = useState(false);
 
   const loadRole = async () => {
     const res = await axios.get("http://localhost:1000/roles/role");
@@ -28,120 +30,130 @@ export const AddServiceProvider = () => {
   } = useForm();
 
   const submitHandler = async (data) => {
-    // console.log(data);
-    const res = await axios.post(
-      "http://localhost:1000/serviceproviders/serviceprovider",
-      data
-    );
-    console.log(res.data.data);
-    if (res.status === 200) {
-      toast.info(" Service Provider Added Successfully !", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-      reset();
-      Navigate("/admin/manageserviceprovider");
-
+    try {
+      // console.log(data);
+      setisLoading(true);
+      const res = await axios.post(
+        "http://localhost:1000/serviceproviders/serviceprovider",
+        data
+      );
+      console.log(res.data.data);
+      if (res.status === 200) {
+        toast.info(" Service Provider Added Successfully !", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        reset();
+        Navigate("/admin/manageserviceprovider");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setisLoading(false);
     }
   };
   return (
-    <>
-      <div className="service-list-container">
-        <ToastContainer
-          position="top-center"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="colored"
-        />
-        <div className="auth-wrapper">
-          <div className="auth-content">
-            <div className="card">
-              <div className="card-body text-center">
-                <h3 className="mb-4">Add Service Provider</h3>
+    <div className="service-list-container">
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <ToastContainer
+            position="top-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="colored"
+          />
+          <div className="auth-wrapper">
+            <div className="auth-content">
+              <div className="card">
+                <div className="card-body text-center">
+                  <h3 className="mb-4">Add Service Provider</h3>
 
-                <form onSubmit={handleSubmit(submitHandler)}>
-                  <div className="input-group mb-3">
-                    <input
-                      name="Name"
-                      {...register("Name")}
-                      type="text"
-                      className="form-control"
-                      placeholder="Enter Name..."
-                    />
-                  </div>
+                  <form onSubmit={handleSubmit(submitHandler)}>
+                    <div className="input-group mb-3">
+                      <input
+                        name="Name"
+                        {...register("Name")}
+                        type="text"
+                        className="form-control"
+                        placeholder="Enter Name..."
+                      />
+                    </div>
 
-                  <div className="input-group mb-3">
-                    <input
-                      name="Password"
-                      {...register("Password")}
-                      type="password"
-                      className="form-control"
-                      placeholder="Enter Password..."
-                    />
-                  </div>
+                    <div className="input-group mb-3">
+                      <input
+                        name="Password"
+                        {...register("Password")}
+                        type="password"
+                        className="form-control"
+                        placeholder="Enter Password..."
+                      />
+                    </div>
 
-                  <div className="input-group mb-3">
-                    <input
-                      name="Email"
-                      {...register("Email")}
-                      type="text"
-                      className="form-control"
-                      placeholder="Enter Email..."
-                    />
-                  </div>
+                    <div className="input-group mb-3">
+                      <input
+                        name="Email"
+                        {...register("Email")}
+                        type="text"
+                        className="form-control"
+                        placeholder="Enter Email..."
+                      />
+                    </div>
 
-                  <div className="input-group mb-3">
-                    <input
-                      name="Contact"
-                      {...register("Contact")}
-                      type="text"
-                      className="form-control"
-                      placeholder="Enter Contact..."
-                    />
-                  </div>
+                    <div className="input-group mb-3">
+                      <input
+                        name="Contact"
+                        {...register("Contact")}
+                        type="text"
+                        className="form-control"
+                        placeholder="Enter Contact..."
+                      />
+                    </div>
 
-                  <div className="input-group mb-3">
-                    <select
-                      name="role"
-                      {...register("role")}
-                      className="form-control"
-                      placeholder="Select Role..."
-                    >
-                      <option>Select Role</option>
-                      {role?.map((role) => {
-                        return (
-                          <>
-                            <option value={role._id}>{role.Name}</option>
-                          </>
-                        );
-                      })}
-                    </select>
-                  </div>
-                  <div>
-                    <input
-                      type="submit"
-                      value="Submit"
-                      className="btn btn-info"
-                    ></input>
-                  </div>
-                </form>
+                    <div className="input-group mb-3">
+                      <select
+                        name="role"
+                        {...register("role")}
+                        className="form-control"
+                        placeholder="Select Role..."
+                      >
+                        <option>Select Role</option>
+                        {role?.map((role) => {
+                          return (
+                            <>
+                              <option value={role._id}>{role.Name}</option>
+                            </>
+                          );
+                        })}
+                      </select>
+                    </div>
+                    <div>
+                      <input
+                        type="submit"
+                        value="Submit"
+                        className="btn btn-info"
+                      ></input>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </>
+        </>
+      )}
+    </div>
   );
 };

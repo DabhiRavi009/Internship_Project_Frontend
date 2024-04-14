@@ -4,10 +4,12 @@ import React, { useEffect, useState } from "react";
 import "../assest/Css/BookedService.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Loader } from "../Loader";
 
 export const BookedService = () => {
-  const [bookservice, setBookService] = useState([]);
-  const id = useParams().id;
+  const [total, setTotalBook] = useState([]); // Provide an initial value of an empty array
+  const [isLoading, setisLoading] = useState(false);
+  const id = localStorage.getItem("Id");
 
   const loadBookServiceById = async () => {
     try {
@@ -15,9 +17,11 @@ export const BookedService = () => {
         "http://localhost:1000/bookservices/bookservice/" + id
       );
       console.log(res.data.data);
-      setBookService(res.data.data);
+      setTotalBook(res.data.data);
     } catch (error) {
       console.log(error);
+    } finally {
+      // setisLoading(false);
     }
   };
 
@@ -26,33 +30,28 @@ export const BookedService = () => {
   }, []);
 
   return (
-    <div className="service-list-container" style={{ marginLeft: "280px" }}>
-      <div className="container">
-        <div className="row">
-          {bookservice.map((bookserv) => (
-            <div className="col-md-4 col-xl-3" key={bookserv._id}>
-              <div
-                className="card bg-c-pink order-card"
-                style={{ marginBottom: "40px", width: "380px" }}
-              >
-                <div className="card-block">
-                  <h6 className="m-b-20">{bookserv.user.Name}</h6>
-                  <h2 className="text-right">
-                    <i className="fa fa-cart-plus f-left" />
-                    <span>{bookserv.Fees}</span>
-                  </h2>
-                  <p className="m-b-0">
-                    Service Booked
-                    <span className="f-right">
-                      {bookserv.ServiceId.Service_Name}
-                    </span>
-                  </p>
+    <div className="service-list-container">
+    <div className="container">
+      <div className="row" style={{ width: "900px" , height:"700px" }}>
+        <div className="col-lg-4">
+          <div className="card card-margin">
+            <div className="card-header no-border"></div>
+            <div className="card-body pt-0">
+              <div className="widget-49">
+                <div className="widget-49-title-wrapper">
+                  <div className="widget-49-date-warning">
+                    <span className="widget-49-date-day">{total.length}</span>
+                  </div>
+                  <div className="widget-49-meeting-info">
+                    <span className="widget-49-pro-title">Total Booking</span>
+                  </div>
                 </div>
               </div>
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </div>
+  </div>
   );
 };

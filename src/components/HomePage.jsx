@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./assest/Css/HomePage.css";
 import "./assest/Css/Responsive.css";
 import I1 from "./assest/Images/slider-img.png";
@@ -13,9 +13,22 @@ import I9 from "./assest/Images/client-1.jpg";
 import I10 from "./assest/Images/client-2.jpg";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { Loader } from "./Loader";
 
 export const HomePage = () => {
+  const [isLoading, setisLoading] = useState(false);
   const { register, handleSubmit } = useForm();
+
+  const Home = useRef();
+  const About = useRef();
+  const Contact = useRef();
+  const Service = useRef();
+
+  const scrollHandler = (elmRef) => {
+    console.log(elmRef.current);
+    window.scrollTo({ top: elmRef.current.offsetTop, behavior: "smooth" });
+  };
+
   const cards = [
     {
       img: I4,
@@ -35,7 +48,9 @@ export const HomePage = () => {
   ];
 
   const submitHandler = (data) => {
+    setisLoading(true);
     console.log(data);
+    setisLoading(false);
   };
   return (
     <>
@@ -45,14 +60,14 @@ export const HomePage = () => {
           <div className="header_top">
             <div className="container-fluid">
               <div className="contact_nav">
-                <a href="">
+                <Link to="">
                   <i className="fa fa-phone" aria-hidden="true" />
                   <span>Call : +91 8153889232</span>
-                </a>
-                <a href="">
+                </Link>
+                <Link to="">
                   <i className="fa fa-envelope" aria-hidden="true" />
                   <span>Email : dabhiravi369@gmail.com</span>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -69,45 +84,59 @@ export const HomePage = () => {
                 >
                   Local Service
                 </span>
-
-                {/* <button
-                  className="navbar-toggler"
-                  type="button"
-                  data-toggle="collapse"
-                  data-target="#navbarSupportedContent"
-                  aria-controls="navbarSupportedContent"
-                  aria-expanded="false"
-                  aria-label="Toggle navigation"
-                >
-                  <span className=""> </span>
-                </button> */}
-
                 <div
                   className="collapse navbar-collapse"
                   id="navbarSupportedContent"
                 >
                   <ul className="navbar-nav ">
-                    <li className="nav-item active">
-                      <a className="nav-link" href="index.html">
-                        Home <span className="sr-only">(current)</span>
-                      </a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="about.html">
-                        {" "}
-                        About
-                      </a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="service.html">
-                        Services
-                      </a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="contact.html">
-                        Contact Us
-                      </a>
-                    </li>
+                    <div id="home">
+                      <li className="nav-item active">
+                        <Link
+                          className="nav-link"
+                          onClick={() => {
+                            scrollHandler(Home);
+                          }}
+                        >
+                          Home <span className="sr-only">(current)</span>
+                        </Link>
+                      </li>
+                    </div>
+                    <div id="about">
+                      <li className="nav-item">
+                        <Link
+                          className="nav-link"
+                          onClick={() => {
+                            scrollHandler(About);
+                          }}
+                        >
+                          About
+                        </Link>
+                      </li>
+                    </div>
+                    <div id="service">
+                      <li className="nav-item">
+                        <Link
+                          className="nav-link"
+                          onClick={() => {
+                            scrollHandler(Service);
+                          }}
+                        >
+                          Services
+                        </Link>
+                      </li>
+                    </div>
+                    <div id="contact">
+                      <li className="nav-item">
+                        <Link
+                          className="nav-link"
+                          onClick={() => {
+                            scrollHandler(Contact);
+                          }}
+                        >
+                          Contact Us
+                        </Link>
+                      </li>
+                    </div>
                     <li className="nav-item">
                       <Link className="nav-link" to="/login">
                         Login
@@ -121,7 +150,7 @@ export const HomePage = () => {
         </header>
         {/* end header section */}
         {/* slider section */}
-        <section className="slider_section ">
+        <section className="slider_section " ref={Home}>
           <div className="container ">
             <div className="row">
               <div className="col-md-6 ">
@@ -138,7 +167,7 @@ export const HomePage = () => {
                     professionals who are vetted, experienced, and ready to
                     tackle your needs.
                   </p>
-                  <a href="">Contact Us</a>
+                  <Link to="">Contact Us</Link>
                 </div>
               </div>
               <div className="col-md-6">
@@ -214,7 +243,7 @@ export const HomePage = () => {
       </section>
       {/* end feature section */}
       {/* about section */}
-      <section className="about_section layout_padding-bottom">
+      <section className="about_section layout_padding-bottom" ref={About}>
         <div className="container">
           <div className="row">
             <div className="col-lg-5 col-md-6">
@@ -231,7 +260,7 @@ export const HomePage = () => {
                   educational workshops, our aim is to foster a stronger, more
                   connected community where everyone feels valued and supported.{" "}
                 </p>
-                <a href="">Read More</a>
+                <Link to="">Read More</Link>
               </div>
             </div>
             <div className="col-lg-7 col-md-6">
@@ -270,7 +299,7 @@ export const HomePage = () => {
                   ensure that every aspect of our clients homes is functioning
                   optimally.
                 </p>
-                <a href="">Read More</a>
+                <Link to="">Read More</Link>
               </div>
             </div>
           </div>
@@ -278,7 +307,7 @@ export const HomePage = () => {
       </section>
       {/* end professional section */}
       {/* service section */}
-      <section className="service_section layout_padding">
+      <section className="service_section layout_padding" ref={Service}>
         <div className="container ">
           <div className="heading_container heading_center">
             <h2> Our Services </h2>
@@ -304,79 +333,15 @@ export const HomePage = () => {
           </div>
 
           <div className="btn-box">
-            <a href="">View More</a>
+            <Link to="">View More</Link>
           </div>
         </div>
       </section>
       {/* end service section */}
       {/* client section */}
-      <section className="client_section ">
-        <div className="container">
-          <div className="heading_container heading_center">
-            <h2>What Our Clients Say</h2>
-          </div>
-          <div className="carousel-wrap layout_padding2-top ">
-            <div className="owl-carousel">
-              <div className="item">
-                <div className="box">
-                  <div className="client_id">
-                    <div className="img-box">
-                      <img src={I7} alt="7" />
-                    </div>
-                    <div className="client_detail">
-                      <div className="client_info">
-                        <h6>Jorch morik</h6>
-                        <i className="fa fa-star" aria-hidden="true" />
-                        <i className="fa fa-star" aria-hidden="true" />
-                        <i className="fa fa-star" aria-hidden="true" />
-                        <i className="fa fa-star" aria-hidden="true" />
-                        <i className="fa fa-star" aria-hidden="true" />
-                      </div>
-                      <i className="fa fa-quote-left" aria-hidden="true" />
-                    </div>
-                  </div>
-                  <div className="client_text">
-                    <p>
-                      "Exceptional service! The team was prompt, professional,
-                      and resolved my issue efficiently. Highly recommend!"
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="item">
-                <div className="box">
-                  <div className="client_id">
-                    <div className="img-box">
-                      <img src={I8} alt="8" />
-                    </div>
-                    <div className="client_detail">
-                      <div className="client_info">
-                        <h6>Jorch morik</h6>
-                        <i className="fa fa-star" aria-hidden="true" />
-                        <i className="fa fa-star" aria-hidden="true" />
-                        <i className="fa fa-star" aria-hidden="true" />
-                        <i className="fa fa-star" aria-hidden="true" />
-                        <i className="fa fa-star" aria-hidden="true" />
-                      </div>
-                      <i className="fa fa-quote-left" aria-hidden="true" />
-                    </div>
-                  </div>
-                  <div className="client_text">
-                    <p>
-                      "Outstanding local service! They went above and beyond to
-                      address my plumbing issue quickly and effectively. Will
-                      definitely use them again!"
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
       {/* end client section */}
       {/* contact section */}
-      <section className="contact_section layout_padding">
+      <section className="contact_section layout_padding" ref={Contact}>
         <div className="container">
           <div className="heading_container">
             <h2>Contact Us</h2>
@@ -443,7 +408,7 @@ export const HomePage = () => {
               <div className="info_items">
                 <div className="row">
                   <div className="col-md-4">
-                    <a href="">
+                    <Link href="">
                       <div className="item ">
                         <div className="img-box ">
                           <i className="fa fa-map-marker" aria-hidden="true" />
@@ -452,48 +417,31 @@ export const HomePage = () => {
                           Shree Ram Society Railway Station Road Ranpur-382245
                         </p>
                       </div>
-                    </a>
+                    </Link>
                   </div>
                   <div className="col-md-4">
-                    <a href="">
+                    <Link href="">
                       <div className="item ">
                         <div className="img-box ">
                           <i className="fa fa-phone" aria-hidden="true" />
                         </div>
                         <p>+91 8153889232</p>
                       </div>
-                    </a>
+                    </Link>
                   </div>
                   <div className="col-md-4">
-                    <a href="">
+                    <Link href="">
                       <div className="item ">
                         <div className="img-box">
                           <i className="fa fa-envelope" aria-hidden="true" />
                         </div>
                         <p>dabhiravi369@gmail.com</p>
                       </div>
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div className="social-box">
-          <h4 style={{ color: "white" }}>Follow Us</h4>
-          <div className="box">
-            <a href="">
-              <i className="fa fa-facebook" aria-hidden="true" />
-            </a>
-            <a href="">
-              <i className="fa fa-twitter" aria-hidden="true" />
-            </a>
-            <a href="">
-              <i className="fa fa-youtube" aria-hidden="true" />
-            </a>
-            <a href="">
-              <i className="fa fa-instagram" aria-hidden="true" />
-            </a>
           </div>
         </div>
       </section>
@@ -503,13 +451,11 @@ export const HomePage = () => {
         <div className="container">
           <p>
             © <span id="displayDateYear" /> All Rights Reserved By
-            <a href="https://html.design/">Free Html Templates</a>
+            <Link to="">Free Html Templates</Link>
           </p>
         </div>
       </footer>
       {/* footer section */}
-      {/* Google Map */}
-      {/* End Google Map */}
     </>
   );
 };

@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-
+import { Loader } from "./Loader";
 export const Sidebar = () => {
   const location = useLocation();
+  const [isLoading, setisLoading] = useState(false);
   const path = location.pathname;
 
   const serviceProviderLinks = [
@@ -72,11 +73,6 @@ export const Sidebar = () => {
       compname: "User",
     },
     {
-      name: "User List",
-      link: "/user/userlist",
-      img: "feather icon-server",
-    },
-    {
       name: "All Services",
       link: "/user/allservices",
       img: "feather icon-server",
@@ -89,6 +85,7 @@ export const Sidebar = () => {
   ];
 
   const getSidebarLinks = () => {
+    // setisLoading(true);
     if (path.includes("admin")) {
       return adminLinks;
     } else if (path.includes("serviceprovider")) {
@@ -96,6 +93,7 @@ export const Sidebar = () => {
     } else {
       return userLinks;
     }
+    // setisLoading(false);
   };
 
   return (

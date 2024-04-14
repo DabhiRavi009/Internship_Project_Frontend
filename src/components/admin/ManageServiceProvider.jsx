@@ -3,13 +3,16 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import { Loader } from "../Loader";
 
 export const ManageServiceProvider = () => {
+  const [isLoading, setisLoading] = useState(false);
   const [serviceProvider, setServiceProvider] = useState([]);
   const Navigate = useNavigate();
 
   const loadServiceProvider = async () => {
     try {
+      setisLoading(true);
       const res = await axios.get(
         "http://localhost:1000/serviceproviders/serviceprovider"
       );
@@ -17,6 +20,8 @@ export const ManageServiceProvider = () => {
       setServiceProvider(res.data.data);
     } catch (error) {
       console.log(error);
+    } finally {
+      setisLoading(false);
     }
   };
 
@@ -48,61 +53,67 @@ export const ManageServiceProvider = () => {
   }, []);
   return (
     <>
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
-      <div className="service-list-container">
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Email</th>
-              <th scope="col">Contact</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {serviceProvider?.map((servpro) => {
-              return (
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <ToastContainer
+            position="top-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="colored"
+          />
+          <div className="service-list-container">
+            <table className="table table-striped">
+              <thead>
                 <tr>
-                  <td>{servpro.Name}</td>
-                  <td>{servpro.Email}</td>
-                  <td>{servpro.Contact}</td>
-                  <td>
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => {
-                        deleteServiceProvider(servpro._id);
-                      }}
-                    >
-                      Delete
-                    </button>
-                    <button
-                      className="btn btn-info"
-                      onClick={() => {
-                        Navigate(
-                          `/serviceprovider/serviceproviderupdate/${servpro._id}`
-                        );
-                      }}
-                    >
-                      Update
-                    </button>
-                  </td>
+                  <th scope="col">Name</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Contact</th>
+                  <th scope="col">Action</th>
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+              </thead>
+              <tbody>
+                {serviceProvider?.map((servpro) => {
+                  return (
+                    <tr>
+                      <td>{servpro.Name}</td>
+                      <td>{servpro.Email}</td>
+                      <td>{servpro.Contact}</td>
+                      <td>
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => {
+                            deleteServiceProvider(servpro._id);
+                          }}
+                        >
+                          Delete
+                        </button>
+                        <button
+                          className="btn btn-info"
+                          onClick={() => {
+                            Navigate(
+                              `/serviceprovider/serviceproviderupdate/${servpro._id}`
+                            );
+                          }}
+                        >
+                          Update
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
     </>
   );
 };

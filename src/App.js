@@ -31,6 +31,19 @@ import { HomePage } from "./components/HomePage";
 import { ServiceProviderProfile } from "./components/serviceprovider/ServiceProviderProfile";
 import { AdminProfile } from "./components/admin/AdminProfile";
 import { UserProfile } from "./components/user/UserProfile";
+import { ResetPassword } from "./components/ResetPassword";
+import { ForgotPassword } from "./components/ForgotPassword";
+import { DonePayment } from "./components/user/DonePayment";
+import { PendingStatus } from "./components/user/PendingStatus";
+import { TotalAmount } from "./components/user/TotalAmount";
+import { TotalFees } from "./components/serviceprovider/TotalAmount";
+import { TotalBooking } from "./components/serviceprovider/TotalBooking";
+import { TotalService } from "./components/serviceprovider/TotalService";
+import { DoneBooking } from "./components/serviceprovider/DoneBooking";
+import { AdTotalService } from "./components/admin/AdTotalService";
+import { AdminTotalSP } from "./components/admin/AdminTotalSP";
+import { AdminAllService } from "./components/admin/AdminAllService";
+import { AdminBookService } from "./components/admin/AdminBookService";
 function App() {
   const path = window.location.pathname;
   return (
@@ -39,6 +52,7 @@ function App() {
         {path === "/" ||
         path === "/login" ||
         path === "" ||
+        path === "/forgotpassword" ||
         path === "/signup" ? null : (
           <Sidebar />
         )}
@@ -56,18 +70,36 @@ function App() {
             <Route path="/signup" element={<SignUp />}></Route>
             <Route path="/*" element={<Error />}></Route>
             <Route path="/" element={<HomePage />}></Route>
+            <Route path="/resetpassword" element={<ResetPassword />}></Route>
+            <Route path="/forgotpassword" element={<ForgotPassword />}></Route>
             <Route element={<ProtectedRoutes />}>
               //admin
               <Route
                 path="/admin/adminbookedservice"
                 element={<BookedServiceAdmin />}
               ></Route>
+              <Route
+                path="/admin/adminbookservice"
+                element={<AdminBookService />}
+              ></Route>
+              <Route
+                path="/admin/adminallservice"
+                element={<AdminAllService />}
+              ></Route>
+              <Route
+                path="/admin/adtotalservice"
+                element={<AdTotalService />}
+              ></Route>
+              <Route
+                path="/admin/adtotalserviceprovider"
+                element={<AdminTotalSP />}
+              ></Route>
               <Route path="/admin/profile" element={<AdminProfile />}></Route>
               <Route
                 path="/admin/dashboard"
                 element={<AdminDashboard />}
               ></Route>
-              <Route path="/admin/addservice" element={<AddService />}></Route>
+              {/* <Route path="/admin/addservice" element={<AddService />}></Route> */}
               <Route
                 path="/admin/manageservice"
                 element={<ManageService />}
@@ -81,6 +113,22 @@ function App() {
               <Route
                 path="/serviceprovider/dashboard"
                 element={<ServiceProviderDashboard />}
+              ></Route>
+              <Route
+                path="/serviceprovider/donebooking"
+                element={<DoneBooking />}
+              ></Route>
+              <Route
+                path="/serviceprovider/totalbooking"
+                element={<TotalBooking />}
+              ></Route>
+              <Route
+                path="/serviceprovider/totalamount"
+                element={<TotalFees />}
+              ></Route>
+              <Route
+                path="/serviceprovider/totalservice"
+                element={<TotalService />}
               ></Route>
               <Route
                 path="/serviceprovider/profile"
@@ -118,6 +166,9 @@ function App() {
                 path="/user/bookedservice"
                 element={<BookedService />}
               ></Route>
+              <Route path="/user/done" element={<DonePayment />}></Route>
+              <Route path="/user/fees" element={<TotalAmount />}></Route>
+              <Route path="/user/pending" element={<PendingStatus />}></Route>
               <Route path="/user/adduser" element={<AddUser />}></Route>
               <Route path="/user/userlist" element={<UserList />}></Route>
               <Route path="/user/allservices" element={<AllServices />}></Route>

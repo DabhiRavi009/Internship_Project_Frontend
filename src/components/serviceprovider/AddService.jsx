@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Loader } from "../Loader";
 
 export const AddService = () => {
   const Navigate = useNavigate();
@@ -18,40 +19,49 @@ export const AddService = () => {
   const [subcategory, setsubcategory] = useState([]);
   const [type, settype] = useState([]);
   const [serviceprovider, setServiceProvider] = useState([]);
+  const [isLoading, setisLoading] = useState(false);
 
   const submitHandler = async (data) => {
-    var formData = new FormData();
-    formData.append("Service_Name", data.Service_Name);
-    formData.append("category", data.category);
-    formData.append("sub_category", data.sub_category);
-    formData.append("type", data.type);
-    formData.append("Fees", data.Fees);
-    formData.append("Area", data.Area);
-    formData.append("City", data.City);
-    formData.append("State", data.State);
-    formData.append("service_provider", data.service_provider);
-    formData.append("myImage", data.myImage[0]);
+    try {
+      setisLoading(true);
+      var formData = new FormData();
+      formData.append("Service_Name", data.Service_Name);
+      formData.append("category", data.category);
+      formData.append("sub_category", data.sub_category);
+      formData.append("type", data.type);
+      formData.append("Fees", data.Fees);
+      formData.append("Area", data.Area);
+      formData.append("City", data.City);
+      formData.append("State", data.State);
+      formData.append("service_provider", data.service_provider);
+      formData.append("myImage", data.myImage[0]);
 
-    const res = await axios.post(
-      "http://localhost:1000/services/service",
-      formData
-    );
-    console.log("res", res.data);
-    if (res.status === 200) {
-      toast.info(" Service Added Successfully !", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-      reset();
-      Navigate("/serviceprovider/servicelist");
+      const res = await axios.post(
+        "http://localhost:1000/services/service",
+        formData
+      );
+      console.log("res", res.data);
+      if (res.status === 200) {
+        toast.info(" Service Added Successfully !", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        reset();
+        Navigate("/serviceprovider/servicelist");
+      }
+      console.log(res.data.data);
+    } catch (error) {
+      console.error("Error adding service:", error);
+    } finally {
+      // Set isLoading to false after the operation is complete
+      setisLoading(false);
     }
-    console.log(res.data.data);
   };
 
   const loadCategory = async () => {
@@ -97,6 +107,8 @@ export const AddService = () => {
 
   return (
     <div className="service-list-container">
+    {isLoading ? <Loader /> : 
+    <>
       <ToastContainer
         position="top-center"
         autoClose={5000}
@@ -522,6 +534,8 @@ export const AddService = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
-};
+    </>
+}
+</div>
+  )
+}

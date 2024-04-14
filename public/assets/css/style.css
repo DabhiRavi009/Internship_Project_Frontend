@@ -13549,7 +13549,7 @@ div.code-toolbar > .toolbar span:hover {
   }
 }
 /**====== File Upload css end ======**/
-
+/* 
 .fixed-button {
   position: fixed;
   bottom: -50px;
@@ -13587,7 +13587,7 @@ div.code-toolbar > .toolbar span:hover {
 .fixed-button.active {
   bottom: 50px;
   opacity: 1;
-}
+} */
 
 @-webkit-keyframes pulse {
   0% {
