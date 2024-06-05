@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Loader } from "./Loader";
+import { baseUrl } from "../Urls";
 // import "../components/Payment.css";
 
 export const Payment = () => {
@@ -15,9 +16,7 @@ export const Payment = () => {
   const loadBookServiceById = async () => {
     try {
       setisLoading(true);
-      const res = await axios.get(
-        "http://localhost:1000/bookservices/bookservice/" + id
-      );
+      const res = await axios.get(`${baseUrl}/bookservices/bookservice/` + id);
       console.log(res.data.data);
     } catch (error) {
       console.log(error);
@@ -32,10 +31,9 @@ export const Payment = () => {
 
   const updateStatusService = async (id) => {
     try {
-      const res = await axios.put(
-        "http://localhost:1000/bookservices/bookservice/" + id,
-        { Status: "Done" }
-      );
+      const res = await axios.put(`${baseUrl}/bookservices/bookservice/` + id, {
+        Status: "Done",
+      });
       if (res.status === 200) {
         toast.info("Payment Done !", {
           position: "top-right",

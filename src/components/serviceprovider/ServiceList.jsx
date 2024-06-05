@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Loader } from "../Loader";
+import { baseUrl } from "../../Urls";
 
 export const ServiceList = () => {
   const [serviceProvider, setServiceProvider] = useState([]);
@@ -17,7 +18,7 @@ export const ServiceList = () => {
       if (id) {
         setisLoading(true);
         const res = await axios.get(
-          `http://localhost:1000/services/serviceproviderbyserviceid/${id}`
+          `${baseUrl}/services/serviceproviderbyserviceid/${id}`
         );
         if (res.status === 200) {
           console.log(res.data.data);
@@ -32,9 +33,7 @@ export const ServiceList = () => {
 
   const deleteService = async (id) => {
     try {
-      const res = await axios.delete(
-        "http://localhost:1000/services/service/" + id
-      );
+      const res = await axios.delete(`${baseUrl}/services/service/` + id);
       if (res.status === 200) {
         toast.info("Service Deleted Successfully!", {
           position: "top-right",
@@ -64,23 +63,6 @@ export const ServiceList = () => {
     }
   }, []);
 
-  // const searchHandler = async (e) => {
-  //   try {
-  //     const res = await axios.get(
-  //       "http://localhost:1000/services/servicefilter",
-  //       {
-  //         params: {
-  //           Service_Name: e.target.value,
-  //         },
-  //       }
-  //     );
-  //     console.log("res in searchHandler", res.data.data);
-  //     setServiceProvider(res.data.data);
-  //   } catch (err) {
-  //     setServiceProvider([]);
-  //   }
-  // };
-
   return (
     <div>
       {isLoading ? (
@@ -102,20 +84,7 @@ export const ServiceList = () => {
             />
 
             <div className="service-list-container">
-              <div>
-                {/* <div className="form-outline" data-mdb-input-init="">
-            <input
-              type="search"
-              className="form-control"
-              placeholder="Search Service"
-              style={{ marginBottom: "20px", width: "99%" }}
-              aria-label="Search"
-              onChange={(e) => {
-                searchHandler(e);
-              }}
-            />
-          </div> */}
-              </div>
+              <div></div>
               <table className="table table-striped">
                 <thead>
                   <tr>

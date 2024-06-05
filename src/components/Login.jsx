@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Loader } from "./Loader";
+import { baseUrl } from "../Urls";
 
 export const Login = () => {
   const [role, setRole] = useState([]);
@@ -56,7 +57,7 @@ export const Login = () => {
   };
 
   const loadRole = async () => {
-    const res = await axios.get("http://localhost:1000/roles/role");
+    const res = await axios.get(`${baseUrl}/roles/role`);
     console.log(res.data.data);
     setRole(res.data.data);
   };
@@ -68,10 +69,7 @@ export const Login = () => {
       const selectedRole = data.role;
       console.log(selectedRole);
       if (selectedRole === "65e560b6d2104a950a65ac77") {
-        const res = await axios.post(
-          "http://localhost:1000/users/user/login",
-          data
-        );
+        const res = await axios.post(`${baseUrl}/users/user/login`, data);
         console.log(res.status);
         if (res.status === 200) {
           toast.info("User Successfully Login !", {
@@ -103,7 +101,7 @@ export const Login = () => {
         }
       } else if (selectedRole === "65e560d7d2104a950a65b168") {
         const res = await axios.post(
-          "http://localhost:1000/serviceproviders/serviceprovider/login",
+          `${baseUrl}/serviceproviders/serviceprovider/login`,
           data
         );
         console.log(res.status);
@@ -136,10 +134,7 @@ export const Login = () => {
           console.log("Login failed");
         }
       } else if (selectedRole === "65fab23815d1121b0919a00a") {
-        const res = await axios.post(
-          "http://localhost:1000/admins/admin/login",
-          data
-        );
+        const res = await axios.post(`${baseUrl}/admins/admin/login`, data);
         console.log(res.status);
         if (res.status === 200) {
           toast.info("Admin Successfully Login !", {

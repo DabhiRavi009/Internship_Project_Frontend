@@ -23,6 +23,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import avtarImage from "../assest/Images/client-2.jpg";
 import { Loader } from "../Loader";
+import { baseUrl } from "../../Urls";
 const theme = createTheme({
   typography: {
     fontFamily: [
@@ -45,7 +46,7 @@ export const AdminProfile = () => {
   const getAdmin = async () => {
     try {
       setisLoading(true);
-      const res = await axios.get("http://localhost:1000/admins/admin/" + id);
+      const res = await axios.get(`${baseUrl}/admins/admin/` + id);
       if (res.data && typeof res.data.data === "object") {
         setspData(res.data.data);
         setValue("Name", res.data.data.Name);
@@ -67,10 +68,7 @@ export const AdminProfile = () => {
 
   const submitHandler = async (data) => {
     try {
-      const res = await axios.put(
-        "http://localhost:1000/admins/admin/" + id,
-        data
-      );
+      const res = await axios.put(`${baseUrl}/admins/admin/` + id, data);
       if (res.status === 200) {
         setspData(res.data.data);
         setIsEditing(false);

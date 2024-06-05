@@ -5,6 +5,7 @@ import "../assest/Css/BookedService.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Loader } from "../Loader";
+import { baseUrl } from "../../Urls";
 
 export const AdTotalService = () => {
   const [service, setService] = useState([]);
@@ -13,7 +14,7 @@ export const AdTotalService = () => {
 
   const loadServices = async () => {
     try {
-      const res = await axios.get(`http://localhost:1000/services/service`);
+      const res = await axios.get(`${baseUrl}/services/service`);
       setService(res.data.data);
     } catch (error) {
       console.log(error);

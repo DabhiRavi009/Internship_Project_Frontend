@@ -12,6 +12,7 @@ import {
 } from "recharts";
 import axios from "axios";
 import { Loader } from "../Loader";
+import { baseUrl } from "../../Urls";
 
 export const Chart = () => {
   const [services, setService] = useState([]);
@@ -29,7 +30,7 @@ export const Chart = () => {
 
   const loadService = async () => {
     setisLoading(true);
-    const res = await axios.get("http://localhost:1000/services/service");
+    const res = await axios.get(`${baseUrl}/services/service`);
     console.log(res.data.data);
     setService(res.data.data);
     setisLoading(false);
@@ -44,9 +45,9 @@ export const Chart = () => {
       <div className="flex flex-d mt-5  h-50 d-inline-block container justify-content-center ">
         <h4
           style={{
-            display:"flex",
-            alignItems:"center",
-            justifyContent:"center",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
             padding: "12px",
             background: "skyblue",
             marginLeft: "10px",
@@ -59,7 +60,11 @@ export const Chart = () => {
         >
           Total Service Of Individual Of Category
         </h4>
-        <ResponsiveContainer width={800} height={300} style={{paddingLeft:"80px"}}>
+        <ResponsiveContainer
+          width={800}
+          height={300}
+          style={{ paddingLeft: "80px" }}
+        >
           <BarChart width={10} height={100} data={data}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />

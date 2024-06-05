@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { Loader } from "../Loader";
+import { baseUrl } from "../../Urls";
 
 export const ManageServiceProvider = () => {
   const [isLoading, setisLoading] = useState(false);
@@ -14,7 +15,7 @@ export const ManageServiceProvider = () => {
     try {
       setisLoading(true);
       const res = await axios.get(
-        "http://localhost:1000/serviceproviders/serviceprovider"
+        `${baseUrl}/serviceproviders/serviceprovider`
       );
       console.log(res.data.data);
       setServiceProvider(res.data.data);
@@ -28,7 +29,7 @@ export const ManageServiceProvider = () => {
   const deleteServiceProvider = async (id) => {
     try {
       const res = await axios.delete(
-        "http://localhost:1000/serviceproviders/serviceprovider/" + id
+        `${baseUrl}/serviceproviders/serviceprovider/` + id
       );
       if (res.status === 200) {
         toast.info("Service Provider Deleted Successfully!", {

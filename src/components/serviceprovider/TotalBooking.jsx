@@ -5,6 +5,7 @@ import "../assest/Css/BookedService.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Loader } from "../Loader";
+import { baseUrl } from "../../Urls";
 
 export const TotalBooking = () => {
   const [booking, setBooking] = useState([]);
@@ -13,7 +14,7 @@ export const TotalBooking = () => {
   const totalBookingById = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:1000/bookservices/bookservice/donesp/${id}`
+        `${baseUrl}/bookservices/bookservice/donesp/${id}`
       );
       setBooking(res.data.data);
     } catch (error) {

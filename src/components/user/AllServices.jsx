@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Loader } from "../Loader";
+import { baseUrl } from "../../Urls";
 
 export const AllServices = () => {
   const [services, setservices] = useState([]);
@@ -10,7 +11,7 @@ export const AllServices = () => {
   const loadService = async () => {
     try {
       setisLoading(true);
-      const res = await axios.get("http://localhost:1000/services/service");
+      const res = await axios.get(`${baseUrl}/services/service`);
       console.log(res.data.data);
       setservices(res.data.data);
     } catch (error) {
@@ -26,14 +27,11 @@ export const AllServices = () => {
 
   const searchHandler = async (e) => {
     try {
-      const res = await axios.get(
-        "http://localhost:1000/services/servicefilter",
-        {
-          params: {
-            Service_Name: e.target.value,
-          },
-        }
-      );
+      const res = await axios.get(`${baseUrl}/services/servicefilter`, {
+        params: {
+          Service_Name: e.target.value,
+        },
+      });
       console.log("res in searchHandler", res.data.data);
       setservices(res.data.data);
     } catch (err) {

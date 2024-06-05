@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { Loader } from "../Loader";
+import { baseUrl } from "../../Urls";
 
 export const ManageUser = () => {
   const [user, setUser] = useState([]);
@@ -13,7 +14,7 @@ export const ManageUser = () => {
   const loadUser = async () => {
     try {
       setisLoading(true);
-      const res = await axios.get("http://localhost:1000/users/user");
+      const res = await axios.get(`${baseUrl}/users/user`);
       console.log(res.data.data);
       setUser(res.data.data);
     } catch (error) {
@@ -25,7 +26,7 @@ export const ManageUser = () => {
 
   const deleteUser = async (id) => {
     try {
-      const res = await axios.delete("http://localhost:1000/users/user/" + id);
+      const res = await axios.delete(`${baseUrl}/users/user/` + id);
       if (res.status === 200) {
         toast.info("User Deleted Successfully!", {
           position: "top-right",

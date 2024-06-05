@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Loader } from "../Loader";
+import { baseUrl } from "../../Urls";
 
 export const UpdateService = () => {
   const [isLoading, setisLoading] = useState(false);
@@ -19,9 +20,7 @@ export const UpdateService = () => {
     setValue,
   } = useForm({
     defaultValues: async () => {
-      const res = await axios.get(
-        "http://localhost:1000/services/service/" + id
-      );
+      const res = await axios.get(`${baseUrl}/services/service/` + id);
       return {
         Service_Name: res.data.data.Service_Name,
         service_provider: res.data.data.service_provider.Name,
@@ -45,10 +44,7 @@ export const UpdateService = () => {
   const submitHandler = async (data) => {
     try {
       setisLoading(true);
-      const res = await axios.put(
-        "http://localhost:1000/services/service/" + id,
-        data
-      );
+      const res = await axios.put(`${baseUrl}/services/service/` + id, data);
       if (res.status === 200) {
         toast.info(" Service Updated Successfully!", {
           position: "top-right",
@@ -72,29 +68,25 @@ export const UpdateService = () => {
   };
 
   const loadCategory = async () => {
-    const res = await axios.get("http://localhost:1000/categorys/category");
+    const res = await axios.get(`${baseUrl}/categorys/category`);
     console.log(res.data.data);
     setcategory(res.data.data);
   };
 
   const loadSubCategory = async () => {
-    const res = await axios.get(
-      "http://localhost:1000/subcategorys/subcategory"
-    );
+    const res = await axios.get(`${baseUrl}/subcategorys/subcategory`);
     console.log(res.data.data);
     setsubcategory(res.data.data);
   };
 
   const loadType = async () => {
-    const res = await axios.get("http://localhost:1000/types/type");
+    const res = await axios.get(`${baseUrl}/types/type`);
     console.log(res.data.data);
     settype(res.data.data);
   };
 
   const loadServiceProvider = async () => {
-    const res = await axios.get(
-      "http://localhost:1000/serviceproviders/serviceprovider"
-    );
+    const res = await axios.get(`${baseUrl}/serviceproviders/serviceprovider`);
     console.log(res.data.data);
     setServiceProvider(res.data.data);
   };

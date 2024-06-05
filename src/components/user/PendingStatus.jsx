@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { baseUrl } from "../../Urls";
 
 export const PendingStatus = () => {
   const [pending, setPending] = useState([]);
@@ -10,7 +11,7 @@ export const PendingStatus = () => {
   const loadPendingStatus = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:1000/bookservices/bookservice/pending/" + id
+        `${baseUrl}/bookservices/bookservice/pending/` + id
       );
       console.log(res.data.data);
       setPending(res.data.data);

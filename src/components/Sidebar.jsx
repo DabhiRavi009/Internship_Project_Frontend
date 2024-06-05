@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Loader } from "./Loader";
+
 export const Sidebar = () => {
   const location = useLocation();
   const [isLoading, setisLoading] = useState(false);

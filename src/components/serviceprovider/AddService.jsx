@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Loader } from "../Loader";
+import { baseUrl } from "../../Urls";
 
 export const AddService = () => {
   const Navigate = useNavigate();
@@ -37,7 +38,7 @@ export const AddService = () => {
       formData.append("myImage", data.myImage[0]);
 
       const res = await axios.post(
-        "http://localhost:1000/services/service",
+        `${baseUrl}/services/service`,
         formData
       );
       console.log("res", res.data);
@@ -65,28 +66,28 @@ export const AddService = () => {
   };
 
   const loadCategory = async () => {
-    const res = await axios.get("http://localhost:1000/categorys/category");
+    const res = await axios.get(`${baseUrl}/categorys/category`);
     console.log(res.data.data);
     setcategory(res.data.data);
   };
 
   const loadSubCategory = async () => {
     const res = await axios.get(
-      "http://localhost:1000/subcategorys/subcategory"
+      `${baseUrl}/subcategorys/subcategory`
     );
     console.log(res.data.data);
     setsubcategory(res.data.data);
   };
 
   const loadType = async () => {
-    const res = await axios.get("http://localhost:1000/types/type");
+    const res = await axios.get(`${baseUrl}/types/type`);
     console.log(res.data.data);
     settype(res.data.data);
   };
 
   const loadServiceProvider = async () => {
     const res = await axios.get(
-      "http://localhost:1000/serviceproviders/serviceprovider"
+      `${baseUrl}/serviceproviders/serviceprovider`
     );
     console.log(res.data.data);
     setServiceProvider(res.data.data);

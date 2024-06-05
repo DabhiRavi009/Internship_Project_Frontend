@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   Avatar,
   Box,
@@ -23,6 +23,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import avtarImage from "../assest/Images/client-2.jpg";
 import { Loader } from "../Loader";
+import { baseUrl } from "../../Urls";
 
 const theme = createTheme({
   typography: {
@@ -43,10 +44,10 @@ export const UserProfile = () => {
   const id = localStorage.getItem("Id");
   const { register, handleSubmit, setValue } = useForm();
 
-  const getUser = async () => {
+  const getUser = useCallback(async () => {
     try {
       setisLoading(true);
-      const res = await axios.get("http://localhost:1000/users/user/" + id);
+      const res = await axios.get(`${baseUrl}/users/user/` + id);
       if (res.data && typeof res.data.data === "object") {
         setspData(res.data.data);
         setValue("Name", res.data.data.Name);
@@ -60,18 +61,15 @@ export const UserProfile = () => {
     } finally {
       setisLoading(false);
     }
-  };
+  }, [id, setValue]);
 
   useEffect(() => {
     getUser();
-  }, []);
+  }, [getUser]);
 
   const submitHandler = async (data) => {
     try {
-      const res = await axios.put(
-        "http://localhost:1000/users/user/" + id,
-        data
-      );
+      const res = await axios.put(`${baseUrl}/users/user/` + id, data);
       if (res.status === 200) {
         setspData(res.data.data);
         setIsEditing(false);

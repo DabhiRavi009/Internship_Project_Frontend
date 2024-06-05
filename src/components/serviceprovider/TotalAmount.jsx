@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { baseUrl } from "../../Urls";
 
 export const TotalFees = () => {
   const [amount, setAmount] = useState([]);
@@ -7,7 +8,7 @@ export const TotalFees = () => {
   const totalAmount = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:1000/bookservices/bookservice/donesp/${id}`
+        `${baseUrl}/bookservices/bookservice/donesp/${id}`
       );
       console.log(res.data.data);
       setAmount(res.data.data);

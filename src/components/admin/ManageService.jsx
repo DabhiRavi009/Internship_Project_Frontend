@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Loader } from "../Loader";
+import { baseUrl } from "../../Urls";
 
 export const ManageService = () => {
   const [isLoading, setisLoading] = useState(false);
@@ -12,26 +13,10 @@ export const ManageService = () => {
   const id = localStorage.getItem("Id");
   console.log("Id", id);
 
-  // const featchMyService = async () => {
-  //   try {
-  //     if (id) {
-  //       const res = await axios.get(
-  //         `http://localhost:1000/services/serviceproviderbyserviceid/${id}`
-  //       );
-  //       if (res.status === 200) {
-  //         console.log(res.data.data);
-  //         setServiceProvider(res.data.data);
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   const featchMyService = async () => {
     try {
       setisLoading(true);
-      const res = await axios.get("http://localhost:1000/services/service");
+      const res = await axios.get(`${baseUrl}/services/service`);
       console.log(res.data.data);
       setServiceProvider(res.data.data);
     } catch (error) {
@@ -43,9 +28,7 @@ export const ManageService = () => {
 
   const deleteService = async (id) => {
     try {
-      const res = await axios.delete(
-        "http://localhost:1000/services/service/" + id
-      );
+      const res = await axios.delete(`${baseUrl}/services/service/` + id);
       if (res.status === 200) {
         toast.info("Service Deleted Successfully!", {
           position: "top-right",
@@ -77,14 +60,11 @@ export const ManageService = () => {
 
   const searchHandler = async (e) => {
     try {
-      const res = await axios.get(
-        "http://localhost:1000/services/servicefilter",
-        {
-          params: {
-            Service_Name: e.target.value,
-          },
-        }
-      );
+      const res = await axios.get(`${baseUrl}/services/servicefilter`, {
+        params: {
+          Service_Name: e.target.value,
+        },
+      });
       console.log("res in searchHandler", res.data.data);
       setServiceProvider(res.data.data);
     } catch (err) {

@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { BookedService } from "./BookedService";
 import { Chart } from "../serviceprovider/Chart.jsx";
-import { Loader } from "../Loader";
 import { DonePayment } from "./DonePayment.jsx";
 import { PendingStatus } from "./PendingStatus.jsx";
 import { TotalAmount } from "./TotalAmount.jsx";
 
 export const UserDashboard = () => {
-  const [isLoading, setisLoading] = useState(false);
-
   return (
     <>
       <div className="row">
@@ -47,7 +44,7 @@ export const UserDashboard = () => {
             border: "2px pink solid",
             borderRadius: "10px",
             marginLeft: "260px",
-            marginBottom:"40px",
+            marginBottom: "40px",
           }}
         >
           <Chart />

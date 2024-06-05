@@ -5,6 +5,7 @@ import "../assest/Css/BookedService.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Loader } from "../Loader";
+import { baseUrl } from "../../Urls";
 
 export const AdminTotalSP = () => {
   const [totalSP, setTotalSP] = useState([]);
@@ -14,7 +15,7 @@ export const AdminTotalSP = () => {
   const loadServiceProvider = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:1000/serviceproviders/serviceprovider`
+        `${baseUrl}/serviceproviders/serviceprovider`
       );
       setTotalSP(res.data.data);
     } catch (error) {

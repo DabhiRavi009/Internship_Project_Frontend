@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Loader } from "./Loader";
+import { baseUrl } from "../Urls";
 
 export const ForgotPassword = () => {
   const [role, setRole] = useState([]);
@@ -46,7 +47,7 @@ export const ForgotPassword = () => {
   };
 
   const loadRole = async () => {
-    const res = await axios.get("http://localhost:1000/roles/role");
+    const res = await axios.get(`${baseUrl}/roles/role`);
     console.log(res.data.data);
     setRole(res.data.data);
   };
@@ -61,10 +62,7 @@ export const ForgotPassword = () => {
       const selectedRole = data.role;
       console.log(selectedRole);
       if (selectedRole === "65e560b6d2104a950a65ac77") {
-        const res = await axios.post(
-          "http://localhost:1000/users/user/isuserexist",
-          data
-        );
+        const res = await axios.post(`${baseUrl}/users/user/isuserexist`, data);
         if (res.data.flag == 1) {
           console.log("Email exist", res.data.data.Email);
           Navigate("/resetpassword", {
@@ -76,7 +74,7 @@ export const ForgotPassword = () => {
         }
       } else if (selectedRole === "65fab23815d1121b0919a00a") {
         const res = await axios.post(
-          "http://localhost:1000/admins/admin/isadminexist",
+          `${baseUrl}/admins/admin/isadminexist`,
           data
         );
         if (res.data.flag == 1) {
@@ -90,7 +88,7 @@ export const ForgotPassword = () => {
         }
       } else if (selectedRole === "65e560d7d2104a950a65b168") {
         const res = await axios.post(
-          "http://localhost:1000/serviceproviders/serviceprovider/isserviceproviderexist",
+          `${baseUrl}/serviceproviders/serviceprovider/isserviceproviderexist`,
           data
         );
         if (res.data.flag == 1) {

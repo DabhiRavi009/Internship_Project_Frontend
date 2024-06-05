@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { Loader } from "../Loader";
+import { baseUrl } from "../../Urls";
 
 export const AddServiceProvider = () => {
   const Navigate = useNavigate();
@@ -13,7 +14,7 @@ export const AddServiceProvider = () => {
   const [isLoading, setisLoading] = useState(false);
 
   const loadRole = async () => {
-    const res = await axios.get("http://localhost:1000/roles/role");
+    const res = await axios.get(`${baseUrl}/roles/role`);
     console.log(res.data.data);
     setRole(res.data.data);
   };
@@ -34,7 +35,7 @@ export const AddServiceProvider = () => {
       // console.log(data);
       setisLoading(true);
       const res = await axios.post(
-        "http://localhost:1000/serviceproviders/serviceprovider",
+        `${baseUrl}/serviceproviders/serviceprovider`,
         data
       );
       console.log(res.data.data);

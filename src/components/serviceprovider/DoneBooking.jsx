@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { baseUrl } from "../../Urls";
 
 export const DoneBooking = () => {
   const [done, setDone] = useState([]);
@@ -10,7 +11,7 @@ export const DoneBooking = () => {
   const loadDoneStatus = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:1000/bookservices/bookservice/donesp/${id}`
+        `${baseUrl}/bookservices/bookservice/donesp/${id}`
       );
       console.log(res.data.data);
       setDone(res.data.data);

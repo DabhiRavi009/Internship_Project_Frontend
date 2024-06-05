@@ -47,7 +47,7 @@ export const ServiceProviderDashboard = () => {
             border: "2px pink solid",
             borderRadius: "10px",
             marginLeft: "260px",
-            marginBottom:"40px",
+            marginBottom: "40px",
           }}
         >
           <Chart />

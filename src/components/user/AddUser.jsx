@@ -5,12 +5,13 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Loader } from "../Loader";
+import { baseUrl } from "../../Urls";
 
 export const AddUser = () => {
   const [isLoading, setisLoading] = useState(false);
   const [role, setRole] = useState([]);
   const loadRole = async () => {
-    const res = await axios.get("http://localhost:1000/roles/role");
+    const res = await axios.get(`${baseUrl}/roles/role`);
     console.log(res.data.data);
     setRole(res.data.data);
   };
@@ -23,7 +24,7 @@ export const AddUser = () => {
 
   const submitHandler = async (data) => {
     setisLoading(true);
-    const res = await axios.post("http://localhost:1000/users/user", data);
+    const res = await axios.post(`${baseUrl}/users/user`, data);
     console.log(res.status);
     if (res.status === 200) {
       toast.success("User Added Sucessfully !", {

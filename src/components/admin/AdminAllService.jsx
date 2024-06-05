@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { baseUrl } from "../../Urls";
 
 export const AdminAllService = () => {
   const [services, setServices] = useState([]);
@@ -11,9 +12,7 @@ export const AdminAllService = () => {
 
   const loadAllServices = async () => {
     try {
-      const res = await axios.get(
-        "http://localhost:1000/bookservices/bookservice"
-      );
+      const res = await axios.get(`${baseUrl}/bookservices/bookservice`);
       console.log(res.data.data);
       setServices(res.data.data);
     } catch (error) {
@@ -24,7 +23,7 @@ export const AdminAllService = () => {
   const deleteService = async (id) => {
     try {
       const res = await axios.delete(
-        "http://localhost:1000/bookservices/bookservice/" + id
+        `${baseUrl}/bookservices/bookservice/` + id
       );
       if (res.status === 200) {
         toast.info("Service Deleted Successfully!", {
@@ -101,7 +100,8 @@ export const AdminAllService = () => {
                     </td>
                     <td>
                       <button
-                        className="btn btn-info" style={{ width: "150px" }}
+                        className="btn btn-info"
+                        style={{ width: "150px" }}
                         onClick={() => {
                           deleteService(serv._id);
                         }}

@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../assest/Css/card.css";
 import { Loader } from "../Loader";
+import { baseUrl } from "../../Urls";
 
 export const FeatchService = () => {
   const Navigate = useNavigate();
@@ -16,9 +17,7 @@ export const FeatchService = () => {
   const loadServiceById = async () => {
     try {
       setisLoading(true);
-      const res = await axios.get(
-        "http://localhost:1000/services/service/" + id
-      );
+      const res = await axios.get(`${baseUrl}/services/service/` + id);
       console.log(res.data.data);
       const responseData = Array.isArray(res.data.data)
         ? res.data.data
@@ -56,7 +55,7 @@ export const FeatchService = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:1000/bookservices/bookservice",
+        `${baseUrl}/bookservices/bookservice`,
         objOfService
       );
       console.log(res.data.data);

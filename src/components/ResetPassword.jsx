@@ -5,6 +5,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Loader } from "./Loader";
+import { baseUrl } from "../Urls";
 
 export const ResetPassword = () => {
   const [role, setRole] = useState([]);
@@ -63,7 +64,7 @@ export const ResetPassword = () => {
   });
 
   const loadRole = async () => {
-    const res = await axios.get("http://localhost:1000/roles/role");
+    const res = await axios.get(`${baseUrl}/roles/role`);
     console.log(res.data.data);
     setRole(res.data.data);
   };
@@ -84,7 +85,7 @@ export const ResetPassword = () => {
       console.log(selectedRole);
       if (selectedRole === "65e560b6d2104a950a65ac77") {
         const res = await axios.post(
-          "http://localhost:1000/users/user/resetpassword",
+          `${baseUrl}/users/user/resetpassword`,
           data
         );
         if (res.data.flag == 1) {
@@ -94,7 +95,7 @@ export const ResetPassword = () => {
         }
       } else if (selectedRole === "65fab23815d1121b0919a00a") {
         const res = await axios.post(
-          "http://localhost:1000/admins/admin/resetpassword",
+          `${baseUrl}/admins/admin/resetpassword`,
           data
         );
         if (res.data.flag == 1) {
@@ -104,7 +105,7 @@ export const ResetPassword = () => {
         }
       } else if (selectedRole === "65e560d7d2104a950a65b168") {
         const res = await axios.post(
-          "http://localhost:1000/serviceproviders/serviceprovider/resetpassword",
+          `${baseUrl}/serviceproviders/serviceprovider/resetpassword`,
           data
         );
         if (res.data.flag == 1) {

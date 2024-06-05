@@ -23,6 +23,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import avtarImage from "../assest/Images/client-2.jpg";
 import { Loader } from "../Loader";
+import { baseUrl } from "../../Urls";
 
 const theme = createTheme({
   typography: {
@@ -47,7 +48,7 @@ export const ServiceProviderProfile = () => {
     try {
       setisLoading(true);
       const res = await axios.get(
-        "http://localhost:1000/serviceproviders/serviceprovider/" + id
+        `${baseUrl}/serviceproviders/serviceprovider/` + id
       );
       if (res.data && typeof res.data.data === "object") {
         setspData(res.data.data);
@@ -72,7 +73,7 @@ export const ServiceProviderProfile = () => {
   const submitHandler = async (data) => {
     try {
       const res = await axios.put(
-        "http://localhost:1000/serviceproviders/serviceprovider/" + id,
+        `${baseUrl}/serviceproviders/serviceprovider/` + id,
         data
       );
       if (res.status === 200) {

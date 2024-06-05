@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Loader } from "../Loader";
+import { baseUrl } from "../../Urls";
 
 export const UpdateUser = () => {
   const id = useParams().id;
@@ -19,7 +20,7 @@ export const UpdateUser = () => {
     reset,
   } = useForm({
     defaultValues: async () => {
-      const res = await axios.get("http://localhost:1000/users/user/" + id);
+      const res = await axios.get(`${baseUrl}/users/user/` + id);
       return {
         Name: res.data.data.Name,
         Password: res.data.data.Password,
@@ -36,7 +37,7 @@ export const UpdateUser = () => {
     try {
       setisLoading(true);
       const res = await axios.put(
-        "http://localhost:1000/users/user/" + id,
+        `${baseUrl}/users/user/` + id,
         data
       );
       if (res.status === 200) {
@@ -62,7 +63,7 @@ export const UpdateUser = () => {
   };
 
   const loadRole = async () => {
-    const res = await axios.get("http://localhost:1000/roles/role");
+    const res = await axios.get(`${baseUrl}/roles/role`);
     console.log(res.data.data);
     setRole(res.data.data);
   };

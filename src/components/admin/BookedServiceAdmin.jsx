@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Loader } from "../Loader";
+import { baseUrl } from "../../Urls";
 
 export const BookedServiceAdmin = () => {
   const [bookservice, setBookService] = useState([]);
@@ -12,9 +13,7 @@ export const BookedServiceAdmin = () => {
   const loadBookServiceById = async () => {
     try {
       setisLoading(true);
-      const res = await axios.get(
-        "http://localhost:1000/bookservices/bookservice/" + id
-      );
+      const res = await axios.get(`${baseUrl}/bookservices/bookservice/` + id);
       console.log(res.data.data);
       setBookService(res.data.data);
     } catch (error) {
