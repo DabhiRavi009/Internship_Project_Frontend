@@ -1,8 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Loader } from "../Loader";
 import { baseUrl } from "../../Urls";
@@ -12,37 +10,24 @@ export const AddUser = () => {
   const [role, setRole] = useState([]);
   const loadRole = async () => {
     const res = await axios.get(`${baseUrl}/roles/role`);
-    console.log(res.data.data);
     setRole(res.data.data);
   };
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   const submitHandler = async (data) => {
-    setisLoading(true);
-    const res = await axios.post(`${baseUrl}/users/user`, data);
-    console.log(res.status);
-    if (res.status === 200) {
-      toast.success("User Added Sucessfully !", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-      console.log("User Added fully");
-      window.location.pathname = "/user/userlist";
-      console.log(res.data.data);
-      localStorage.setItem("Id", res.data.data._id);
-      setisLoading(false);
-    }
+    try{
+      setisLoading(true);
+      const res = await axios.post(`${baseUrl}/users/user`, data);
+      if (res.status === 200) {
+        alert("User Added fully");
+        window.location.pathname = "/user/userlist";
+        localStorage.setItem("Id", res.data.data._id);
+        reset();
+        setisLoading(false);
+      }
+      }catch(error){
+        alert(error)
+      }
   };
 
   useEffect(() => {

@@ -1,25 +1,17 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { Loader } from "../Loader";
 import { baseUrl } from "../../Urls";
 
 export const BookedServiceAdmin = () => {
   const [bookservice, setBookService] = useState([]);
   const id = useParams().id;
-  const [isLoading, setisLoading] = useState(false);
   const loadBookServiceById = async () => {
     try {
-      setisLoading(true);
       const res = await axios.get(`${baseUrl}/bookservices/bookservice/` + id);
-      console.log(res.data.data);
       setBookService(res.data.data);
     } catch (error) {
-      console.log(error);
-    } finally {
-      setisLoading(false);
+      alert(error);
     }
   };
 

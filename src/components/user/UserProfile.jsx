@@ -76,7 +76,7 @@ export const UserProfile = () => {
         getUser();
       }
     } catch (error) {
-      console.log("Error", error);
+      alert("Error", error);
     }
   };
 
@@ -98,7 +98,6 @@ export const UserProfile = () => {
                 }}
               >
                 <Grid container spacing={4}>
-                  {/* Existing Profile Card Section */}
                   <Grid item xs={12} sm={3}>
                     <Paper
                       elevation={3}

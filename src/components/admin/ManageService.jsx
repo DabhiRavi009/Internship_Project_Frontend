@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { Loader } from "../Loader";
 import { baseUrl } from "../../Urls";
 
@@ -11,16 +9,14 @@ export const ManageService = () => {
   const [serviceProvider, setServiceProvider] = useState([]);
   const Navigate = useNavigate();
   const id = localStorage.getItem("Id");
-  console.log("Id", id);
 
   const featchMyService = async () => {
     try {
       setisLoading(true);
       const res = await axios.get(`${baseUrl}/services/service`);
-      console.log(res.data.data);
       setServiceProvider(res.data.data);
     } catch (error) {
-      console.log(error);
+      alert(error);
     } finally {
       setisLoading(false);
     }
@@ -30,30 +26,24 @@ export const ManageService = () => {
     try {
       const res = await axios.delete(`${baseUrl}/services/service/` + id);
       if (res.status === 200) {
-        toast.info("Service Deleted Successfully!", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+        alert("Service Deleted Successfully");
         featchMyService();
       }
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
 
   const featchData = (id) => {
-    Navigate(`../user/featchservice/${id}`);
+    try {
+      Navigate(`../user/featchservice/${id}`);
+    } catch (error) {
+      alert(error);
+    }
   };
 
   useEffect(() => {
-    if (id != null || id != undefined) {
-      console.log(id);
+    if (id !== null || id !== undefined) {
       featchMyService();
     }
   }, []);
@@ -65,7 +55,6 @@ export const ManageService = () => {
           Service_Name: e.target.value,
         },
       });
-      console.log("res in searchHandler", res.data.data);
       setServiceProvider(res.data.data);
     } catch (err) {
       setServiceProvider([]);
@@ -77,94 +66,80 @@ export const ManageService = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <div>
-          <ToastContainer
-            position="top-center"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="colored"
-          />
-          <div className="service-list-container">
-            <div>
-              <div className="form-outline" data-mdb-input-init="">
-                <input
-                  type="search"
-                  className="form-control"
-                  placeholder="Search Service"
-                  style={{ marginBottom: "20px", width: "99%" }}
-                  aria-label="Search"
-                  onChange={(e) => {
-                    searchHandler(e);
-                  }}
-                />
-              </div>
+        <div className="service-list-container">
+          <div>
+            <div className="form-outline" data-mdb-input-init="">
+              <input
+                type="search"
+                className="form-control"
+                placeholder="Search Service"
+                style={{ marginBottom: "20px", width: "99%" }}
+                aria-label="Search"
+                onChange={(e) => {
+                  searchHandler(e);
+                }}
+              />
             </div>
-            <table className="table table-striped">
-              <thead>
-                <tr>
-                  <th scope="col">Service Name</th>
-                  <th scope="col">Service Provider</th>
-                  <th scope="col">Category</th>
-                  <th scope="col">SubCategory</th>
-                  <th scope="col">Type</th>
-                  <th scope="col">Fees</th>
-                  <th scope="col">City</th>
-                  <th scope="col">State</th>
-                  <th scope="col" style={{ justifyContent: "center" }}>
-                    Action
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {serviceProvider?.map((servPro) => {
-                  return (
-                    <tr key={servPro._id}>
-                      <td>{servPro.Service_Name}</td>
-                      <td>{servPro.service_provider.Name}</td>
-                      <td>{servPro.category.Name}</td>
-                      <td>{servPro.sub_category.Name}</td>
-                      <td>{servPro.type.Name}</td>
-                      <td>{servPro.Fees}</td>
-                      <td>{servPro.City}</td>
-                      <td>{servPro.State}</td>
-                      <td>
-                        <button
-                          className="btn btn-success"
-                          onClick={() => {
-                            featchData(servPro._id);
-                          }}
-                        >
-                          Detail
-                        </button>
-                        <button
-                          className="btn btn-danger"
-                          onClick={() => {
-                            deleteService(servPro._id);
-                          }}
-                        >
-                          Delete
-                        </button>
-                        <button
-                          className="btn btn-info"
-                          onClick={() => {
-                            Navigate(`/serviceprovider/update/${servPro._id}`);
-                          }}
-                        >
-                          Update
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
           </div>
+          <table className="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Service Name</th>
+                <th scope="col">Service Provider</th>
+                <th scope="col">Category</th>
+                <th scope="col">SubCategory</th>
+                <th scope="col">Type</th>
+                <th scope="col">Fees</th>
+                <th scope="col">City</th>
+                <th scope="col">State</th>
+                <th scope="col" style={{ justifyContent: "center" }}>
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {serviceProvider?.map((servPro) => {
+                return (
+                  <tr key={servPro._id}>
+                    <td>{servPro.Service_Name}</td>
+                    <td>{servPro.service_provider.Name}</td>
+                    <td>{servPro.category.Name}</td>
+                    <td>{servPro.sub_category.Name}</td>
+                    <td>{servPro.type.Name}</td>
+                    <td>{servPro.Fees}</td>
+                    <td>{servPro.City}</td>
+                    <td>{servPro.State}</td>
+                    <td>
+                      <button
+                        className="btn btn-success"
+                        onClick={() => {
+                          featchData(servPro._id);
+                        }}
+                      >
+                        Detail
+                      </button>
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => {
+                          deleteService(servPro._id);
+                        }}
+                      >
+                        Delete
+                      </button>
+                      <button
+                        className="btn btn-info"
+                        onClick={() => {
+                          Navigate(`/serviceprovider/update/${servPro._id}`);
+                        }}
+                      >
+                        Update
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       )}
     </>

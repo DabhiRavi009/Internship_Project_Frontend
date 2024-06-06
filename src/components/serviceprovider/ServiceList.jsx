@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { Loader } from "../Loader";
 import { baseUrl } from "../../Urls";
 
@@ -11,7 +9,6 @@ export const ServiceList = () => {
   const [isLoading, setisLoading] = useState(false);
   const Navigate = useNavigate();
   const id = localStorage.getItem("Id");
-  console.log("Id", id);
 
   const featchMyService = async () => {
     try {
@@ -21,13 +18,12 @@ export const ServiceList = () => {
           `${baseUrl}/services/serviceproviderbyserviceid/${id}`
         );
         if (res.status === 200) {
-          console.log(res.data.data);
           setServiceProvider(res.data.data);
           setisLoading(false);
         }
       }
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
 
@@ -35,30 +31,24 @@ export const ServiceList = () => {
     try {
       const res = await axios.delete(`${baseUrl}/services/service/` + id);
       if (res.status === 200) {
-        toast.info("Service Deleted Successfully!", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+        alert("Service Deleted Successfully!");
         featchMyService();
       }
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
 
   const featchData = (id) => {
-    Navigate(`../user/featchservice/${id}`);
+    try {
+      Navigate(`../user/featchservice/${id}`);
+    } catch (error) {
+      alert(error);
+    }
   };
 
   useEffect(() => {
-    if (id != null || id != undefined) {
-      console.log(id);
+    if (id !== null || id !== undefined) {
       featchMyService();
     }
   }, []);
@@ -70,19 +60,6 @@ export const ServiceList = () => {
       ) : (
         <>
           <div>
-            <ToastContainer
-              position="top-center"
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="colored"
-            />
-
             <div className="service-list-container">
               <div></div>
               <table className="table table-striped">

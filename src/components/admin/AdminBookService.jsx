@@ -1,15 +1,11 @@
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "../assest/Css/BookedService.css";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { Loader } from "../Loader";
 import { baseUrl } from "../../Urls";
 
 export const AdminBookService = () => {
   const [service, setService] = useState([]);
-  const id = localStorage.getItem("Id");
   const navigate = useNavigate();
 
   const loadBookService = async () => {
@@ -17,7 +13,7 @@ export const AdminBookService = () => {
       const res = await axios.get(`${baseUrl}/bookservices/bookservice`);
       setService(res.data.data);
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
 
@@ -26,8 +22,11 @@ export const AdminBookService = () => {
   }, []);
 
   const handleCardClick = () => {
-    navigate("../admin/adminbookedservice");
-    console.log("function run");
+    try {
+      navigate("../admin/adminbookedservice");
+    } catch (error) {
+      alert(error);
+    }
   };
 
   return (

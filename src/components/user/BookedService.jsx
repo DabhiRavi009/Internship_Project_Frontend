@@ -1,26 +1,18 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "../assest/Css/BookedService.css";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { Loader } from "../Loader";
 import { baseUrl } from "../../Urls";
 
 export const BookedService = () => {
-  const [total, setTotalBook] = useState([]); // Provide an initial value of an empty array
-  const [isLoading, setisLoading] = useState(false);
+  const [total, setTotalBook] = useState([]);
   const id = localStorage.getItem("Id");
 
   const loadBookServiceById = async () => {
     try {
       const res = await axios.get(`${baseUrl}/bookservices/bookservice/` + id);
-      console.log(res.data.data);
       setTotalBook(res.data.data);
     } catch (error) {
-      console.log(error);
-    } finally {
-      // setisLoading(false);
+      alert(error);
     }
   };
 

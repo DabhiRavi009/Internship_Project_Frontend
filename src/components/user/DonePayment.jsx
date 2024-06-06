@@ -1,24 +1,20 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "../assest/Css/BookedService.css";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { Loader } from "../Loader";
 import { baseUrl } from "../../Urls";
 
 export const DonePayment = () => {
-  const [done, setDone] = useState([]);
+  const [done, setDone] = useState("0");
   const id = localStorage.getItem("Id");
 
   const loadDonePaymentById = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:1000/bookservices/bookservice/done/${id}`
+        `${baseUrl}/bookservices/bookservice/done/${id}`
       );
       setDone(res.data.data);
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
 

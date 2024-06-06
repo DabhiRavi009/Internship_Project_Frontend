@@ -3,8 +3,6 @@ import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { Loader } from "../Loader";
 import { baseUrl } from "../../Urls";
 
@@ -12,13 +10,7 @@ export const UpdateService = () => {
   const [isLoading, setisLoading] = useState(false);
   const id = useParams().id;
   const Navigate = useNavigate();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-    setValue,
-  } = useForm({
+  const { register, handleSubmit, reset } = useForm({
     defaultValues: async () => {
       const res = await axios.get(`${baseUrl}/services/service/` + id);
       return {
@@ -46,61 +38,57 @@ export const UpdateService = () => {
       setisLoading(true);
       const res = await axios.put(`${baseUrl}/services/service/` + id, data);
       if (res.status === 200) {
-        toast.info(" Service Updated Successfully!", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+        alert("Service Updated Successfully!");
         reset();
         Navigate("/serviceprovider/servicelist");
-        console.log(res.data.data);
       }
     } catch (error) {
-      console.log(error);
+      alert(error);
     } finally {
       setisLoading(false);
     }
   };
 
   const loadCategory = async () => {
-    const res = await axios.get(`${baseUrl}/categorys/category`);
-    console.log(res.data.data);
-    setcategory(res.data.data);
+    try {
+      const res = await axios.get(`${baseUrl}/categorys/category`);
+      setcategory(res.data.data);
+    } catch (error) {
+      alert(error);
+    }
   };
 
   const loadSubCategory = async () => {
-    const res = await axios.get(`${baseUrl}/subcategorys/subcategory`);
-    console.log(res.data.data);
-    setsubcategory(res.data.data);
+    try {
+      const res = await axios.get(`${baseUrl}/subcategorys/subcategory`);
+      setsubcategory(res.data.data);
+    } catch (error) {
+      alert(error);
+    }
   };
 
   const loadType = async () => {
-    const res = await axios.get(`${baseUrl}/types/type`);
-    console.log(res.data.data);
-    settype(res.data.data);
+    try {
+      const res = await axios.get(`${baseUrl}/types/type`);
+      settype(res.data.data);
+    } catch (error) {
+      alert(error);
+    }
   };
 
   const loadServiceProvider = async () => {
-    const res = await axios.get(`${baseUrl}/serviceproviders/serviceprovider`);
-    console.log(res.data.data);
-    setServiceProvider(res.data.data);
+    try{
+
+    }catch(error){
+      const res = await axios.get(`${baseUrl}/serviceproviders/serviceprovider`);
+      setServiceProvider(res.data.data);
+    }
   };
 
   useEffect(() => {
     loadCategory();
-  }, []);
-  useEffect(() => {
     loadSubCategory();
-  }, []);
-  useEffect(() => {
     loadType();
-  }, []);
-  useEffect(() => {
     loadServiceProvider();
   }, []);
 
@@ -110,18 +98,6 @@ export const UpdateService = () => {
         <Loader />
       ) : (
         <>
-          <ToastContainer
-            position="top-center"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="colored"
-          />
           <div className="auth-wrapper">
             <div className="auth-content">
               <div className="card">
@@ -521,7 +497,7 @@ export const UpdateService = () => {
                         placeholder="Choose File..."
                       ></input>
                       {serviceprovider?.map((serv) => {
-                        return <img src={serv.imageUrl}></img>;
+                        return <img src={serv.imageUrl} alt=""></img>;
                       })}
                     </div>
 

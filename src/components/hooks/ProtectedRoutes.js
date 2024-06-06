@@ -15,7 +15,6 @@ const useAuth = () => {
 
 export const ProtectedRoutes = () => {
   const auth = useAuth();
-  console.log("auth...", auth);
 
   return auth == true ? <Outlet /> : <Login />;
 };

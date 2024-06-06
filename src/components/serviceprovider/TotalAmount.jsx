@@ -3,25 +3,23 @@ import axios from "axios";
 import { baseUrl } from "../../Urls";
 
 export const TotalFees = () => {
-  const [amount, setAmount] = useState([]);
+  const [amount, setAmount] = useState("0");
   const id = localStorage.getItem("Id");
+
   const totalAmount = async () => {
     try {
       const res = await axios.get(
         `${baseUrl}/bookservices/bookservice/donesp/${id}`
       );
-      console.log(res.data.data);
-      setAmount(res.data.data);
+      let totalAmount = 0;
       if (res.data.data && res.data.data.length > 0) {
-        var amountBooking = 0;
         for (const booking of res.data.data) {
-          amountBooking += booking.Fees;
-          setAmount({ totalAmount: amountBooking });
+          totalAmount += booking.Fees;
         }
-        console.log("Total Amount of Done Bookings:", amountBooking);
       }
+      setAmount({ totalAmount });
     } catch (error) {
-      console.log(error.response.data);
+      alert(error.response.data);
     }
   };
 

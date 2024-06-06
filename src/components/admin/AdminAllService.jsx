@@ -1,22 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { baseUrl } from "../../Urls";
 
 export const AdminAllService = () => {
   const [services, setServices] = useState([]);
-  const id = localStorage.getItem("Id");
-  const Navigate = useNavigate();
 
   const loadAllServices = async () => {
     try {
       const res = await axios.get(`${baseUrl}/bookservices/bookservice`);
-      console.log(res.data.data);
       setServices(res.data.data);
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
 
@@ -26,20 +20,11 @@ export const AdminAllService = () => {
         `${baseUrl}/bookservices/bookservice/` + id
       );
       if (res.status === 200) {
-        toast.info("Service Deleted Successfully!", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+        alert("Service Deleted Successfully.");
         loadAllServices();
       }
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
   useEffect(() => {
@@ -65,20 +50,8 @@ export const AdminAllService = () => {
             {services?.map((serv) => {
               return (
                 <>
-                  <ToastContainer
-                    position="top-center"
-                    autoClose={5000}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                    theme="colored"
-                  />
                   <tr>
-                    <td scope="row">{serv.ServiceId.Service_Name}</td>
+                    <td>{serv.ServiceId.Service_Name}</td>
                     <td>{serv.Fees}</td>
                     <td>{serv.user.Name}</td>
                     <td>

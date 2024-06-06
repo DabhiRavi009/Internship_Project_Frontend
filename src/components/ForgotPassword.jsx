@@ -2,8 +2,6 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { Loader } from "./Loader";
 import { baseUrl } from "../Urls";
 
@@ -47,9 +45,12 @@ export const ForgotPassword = () => {
   };
 
   const loadRole = async () => {
-    const res = await axios.get(`${baseUrl}/roles/role`);
-    console.log(res.data.data);
-    setRole(res.data.data);
+    try{
+      const res = await axios.get(`${baseUrl}/roles/role`);
+      setRole(res.data.data);
+    }catch(error){
+      alert(error)
+    }
   };
 
   useEffect(() => {
@@ -60,25 +61,21 @@ export const ForgotPassword = () => {
     try {
       setisLoading(true);
       const selectedRole = data.role;
-      console.log(selectedRole);
       if (selectedRole === "65e560b6d2104a950a65ac77") {
         const res = await axios.post(`${baseUrl}/users/user/isuserexist`, data);
-        if (res.data.flag == 1) {
-          console.log("Email exist", res.data.data.Email);
+        if (res.data.flag == 1)
           Navigate("/resetpassword", {
             state: {
               Email: res.data.data.Email,
               role: res.data.data.role.Name,
             },
           });
-        }
       } else if (selectedRole === "65fab23815d1121b0919a00a") {
         const res = await axios.post(
           `${baseUrl}/admins/admin/isadminexist`,
           data
         );
         if (res.data.flag == 1) {
-          console.log("Email exist", res.data.data.Email);
           Navigate("/resetpassword", {
             state: {
               Email: res.data.data.Email,
@@ -92,7 +89,6 @@ export const ForgotPassword = () => {
           data
         );
         if (res.data.flag == 1) {
-          console.log("Email exist", res.data.data.Email);
           Navigate("/resetpassword", {
             state: {
               Email: res.data.data.Email,

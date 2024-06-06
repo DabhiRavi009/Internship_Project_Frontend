@@ -1,10 +1,6 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "../assest/Css/BookedService.css";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { Loader } from "../Loader";
 import { baseUrl } from "../../Urls";
 
 export const TotalService = () => {
@@ -18,7 +14,7 @@ export const TotalService = () => {
       );
       setTotal(res.data.data);
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
 

@@ -1,21 +1,17 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
 import { Loader } from "./Loader";
 import { baseUrl } from "../Urls";
 
 export const SignUp = () => {
   const [role, setRole] = useState([]);
   const [isLoading, setisLoading] = useState(false);
-  const Navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm();
 
   const validationSchema = {
@@ -81,34 +77,23 @@ export const SignUp = () => {
   };
 
   const loadRole = async () => {
-    const res = await axios.get(`${baseUrl}/roles/role`);
-    console.log(res.data.data);
-    setRole(res.data.data);
+    try {
+      const res = await axios.get(`${baseUrl}/roles/role`);
+      setRole(res.data.data);
+    } catch (error) {
+      alert(error);
+    }
   };
 
   const submitHandler = async (data) => {
-    console.log("Form data:", data);
     try {
       setisLoading(true);
       const selectedRole = data.role;
-      console.log("Selected role:", selectedRole);
       if (selectedRole === "65e560b6d2104a950a65ac77") {
         const res = await axios.post(`${baseUrl}/users/user`, data);
-        console.log(res.status);
         if (res.status === 200) {
-          toast.info("User Registered Sucessfully !", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          console.log("User Registered Sucessfully");
-          window.location.pathname = "/";
-          console.log(res.data.data);
+          alert("User Registered Sucessfully");
+          window.location.pathname = "/login";
           localStorage.setItem("Id", res.data.data._id);
         }
       } else if (selectedRole === "65e560d7d2104a950a65b168") {
@@ -116,45 +101,21 @@ export const SignUp = () => {
           `${baseUrl}/serviceproviders/serviceprovider`,
           data
         );
-        console.log(res.data.data);
         if (res.status === 200) {
-          toast.info(" Service Provider Registered Successfully !", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          console.log("Service Provider Registered Sucessfully");
-          window.location.pathname = "/";
-          console.log(res.data.data);
+          alert("Service Provider Registered Sucessfully");
+          window.location.pathname = "/login";
           localStorage.setItem("Id", res.data.data._id);
         }
       } else if (selectedRole === "65fab23815d1121b0919a00a") {
         const res = await axios.post(`${baseUrl}/admins/admin`, data);
-        console.log(res.data.data);
         if (res.status === 200) {
-          toast.info(" Admin Registered Successfully !", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          console.log("Admin Registered Sucessfully");
-          window.location.pathname = "/";
-          console.log(res.data.data);
+          alert("Admin Registered Sucessfully");
+          window.location.pathname = "/login";
           localStorage.setItem("Id", res.data.data._id);
         }
       }
     } catch (error) {
-      console.error("An error occurred:", error);
+      alert("An error occurred:", error);
     } finally {
       setisLoading(false);
     }
@@ -170,19 +131,6 @@ export const SignUp = () => {
         <Loader />
       ) : (
         <>
-          <ToastContainer
-            position="top-center"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="colored"
-          />
-
           <div className="auth-wrapper">
             <div className="auth-content">
               <div className="auth-bg">

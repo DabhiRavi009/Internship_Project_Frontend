@@ -1,10 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Loader } from "./Loader";
 
 export const Sidebar = () => {
   const location = useLocation();
-  const [isLoading, setisLoading] = useState(false);
   const path = location.pathname;
 
   const serviceProviderLinks = [
@@ -86,15 +84,17 @@ export const Sidebar = () => {
   ];
 
   const getSidebarLinks = () => {
-    // setisLoading(true);
-    if (path.includes("admin")) {
-      return adminLinks;
-    } else if (path.includes("serviceprovider")) {
-      return serviceProviderLinks;
-    } else {
-      return userLinks;
-    }
-    // setisLoading(false);
+    try{
+      if (path.includes("admin")) {
+        return adminLinks;
+      } else if (path.includes("serviceprovider")) {
+        return serviceProviderLinks;
+      } else {
+        return userLinks;
+      }
+      }catch(error){
+        alert(error);
+      }
   };
 
   return (

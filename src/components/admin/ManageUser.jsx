@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { Loader } from "../Loader";
 import { baseUrl } from "../../Urls";
@@ -15,10 +13,9 @@ export const ManageUser = () => {
     try {
       setisLoading(true);
       const res = await axios.get(`${baseUrl}/users/user`);
-      console.log(res.data.data);
       setUser(res.data.data);
     } catch (error) {
-      console.log(error);
+      alert(error);
     } finally {
       setisLoading(false);
     }
@@ -28,20 +25,11 @@ export const ManageUser = () => {
     try {
       const res = await axios.delete(`${baseUrl}/users/user/` + id);
       if (res.status === 200) {
-        toast.info("User Deleted Successfully!", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+        alert("User Deleted Successfully!");
         loadUser();
       }
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
 
@@ -54,18 +42,6 @@ export const ManageUser = () => {
         <Loader />
       ) : (
         <>
-          <ToastContainer
-            position="top-center"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="colored"
-          />
           <div className="service-list-container">
             <table className="table table-striped">
               <thead>

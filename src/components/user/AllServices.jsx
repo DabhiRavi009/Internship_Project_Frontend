@@ -12,17 +12,20 @@ export const AllServices = () => {
     try {
       setisLoading(true);
       const res = await axios.get(`${baseUrl}/services/service`);
-      console.log(res.data.data);
       setservices(res.data.data);
     } catch (error) {
-      console.log(error);
+      alert(error);
     } finally {
       setisLoading(false);
     }
   };
 
   const featchData = (id) => {
-    Navigate(`/user/featchservice/${id}`);
+    try {
+      Navigate(`/user/featchservice/${id}`);
+    } catch (error) {
+      alert(error);
+    }
   };
 
   const searchHandler = async (e) => {
@@ -32,7 +35,6 @@ export const AllServices = () => {
           Service_Name: e.target.value,
         },
       });
-      console.log("res in searchHandler", res.data.data);
       setservices(res.data.data);
     } catch (err) {
       setservices([]);

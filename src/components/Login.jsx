@@ -2,15 +2,10 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { Loader } from "./Loader";
 import { baseUrl } from "../Urls";
 
 export const Login = () => {
   const [role, setRole] = useState([]);
-  const [isLoading, setisLoading] = useState(false);
-  const Navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -57,119 +52,52 @@ export const Login = () => {
   };
 
   const loadRole = async () => {
-    const res = await axios.get(`${baseUrl}/roles/role`);
-    console.log(res.data.data);
-    setRole(res.data.data);
+    try {
+      const res = await axios.get(`${baseUrl}/roles/role`);
+      setRole(res.data.data);
+    } catch (error) {
+      alert(error);
+    }
   };
 
   const submitHandler = async (data) => {
-    console.log(data);
     try {
-      // setisLoading(true);
       const selectedRole = data.role;
-      console.log(selectedRole);
       if (selectedRole === "65e560b6d2104a950a65ac77") {
         const res = await axios.post(`${baseUrl}/users/user/login`, data);
-        console.log(res.status);
         if (res.status === 200) {
-          toast.info("User Successfully Login !", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          console.log("User Login Sucess");
+          alert("User Login Sucess");
           window.location.pathname = "/user/dashboard";
-          console.log(res.data.data);
           localStorage.setItem("Id", res.data.data._id);
         } else {
-          toast.error("User Login Failed!", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          console.log("User Login failed");
+          alert("User Login failed");
         }
       } else if (selectedRole === "65e560d7d2104a950a65b168") {
         const res = await axios.post(
           `${baseUrl}/serviceproviders/serviceprovider/login`,
           data
         );
-        console.log(res.status);
         if (res.status === 200) {
-          toast.info("Service Provider Successfully Login !", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          console.log("Service Provider Login Sucess");
+          alert("Service Provider Login Sucess");
           window.location.pathname = "/serviceprovider/dashboard";
-          console.log(res.data.data);
           localStorage.setItem("Id", res.data.data._id);
         } else {
-          toast.error("Login Failed!", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          console.log("Login failed");
+          alert("Login failed");
         }
       } else if (selectedRole === "65fab23815d1121b0919a00a") {
         const res = await axios.post(`${baseUrl}/admins/admin/login`, data);
-        console.log(res.status);
         if (res.status === 200) {
-          toast.info("Admin Successfully Login !", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          console.log("Admin Login Sucess");
+          alert("Admin Login Sucess");
           window.location.pathname = "/admin/dashboard";
-          console.log(res.data.data);
           localStorage.setItem("Id", res.data.data._id);
         } else {
-          toast.error("Admin Login Failed!", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          console.log("Admin Login failed");
+          alert("Admin Login failed");
         }
       }
       reset();
     } catch (error) {
-      console.error("An error occurred:", error);
+      alert("An error occurred:", error);
     } finally {
-      // setisLoading(false);
     }
   };
 
@@ -179,19 +107,6 @@ export const Login = () => {
 
   return (
     <>
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
-
       <div className="auth-wrapper">
         <div className="auth-content">
           <div className="auth-bg">

@@ -2,8 +2,6 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { Loader } from "./Loader";
 import { baseUrl } from "../Urls";
 
@@ -64,9 +62,12 @@ export const ResetPassword = () => {
   });
 
   const loadRole = async () => {
-    const res = await axios.get(`${baseUrl}/roles/role`);
-    console.log(res.data.data);
-    setRole(res.data.data);
+    try{
+      const res = await axios.get(`${baseUrl}/roles/role`);
+      setRole(res.data.data);
+    }catch(error){
+      alert(error)
+    }
   };
 
   useEffect(() => {
@@ -82,14 +83,12 @@ export const ResetPassword = () => {
     };
     try {
       const selectedRole = data.role;
-      console.log(selectedRole);
       if (selectedRole === "65e560b6d2104a950a65ac77") {
         const res = await axios.post(
           `${baseUrl}/users/user/resetpassword`,
           data
         );
         if (res.data.flag == 1) {
-          console.log("Password Reset Sucessfully");
           alert("User Passsword Reset Successfully...");
           Navigate("/login");
         }
@@ -99,7 +98,6 @@ export const ResetPassword = () => {
           data
         );
         if (res.data.flag == 1) {
-          console.log("Password Reset Sucessfully");
           alert("Admin Passsword Reset Successfully");
           Navigate("/login");
         }
@@ -110,12 +108,11 @@ export const ResetPassword = () => {
         );
         if (res.data.flag == 1) {
           Navigate("/login");
-          console.log("Password Reset Sucessfully");
           alert("Service Provider Passsword Reset Successfully...");
         }
       }
     } catch (error) {
-      console.error("An error occurred:", error);
+    alert("An error occurred:", error);
     } finally {
       setisLoading(false);
     }

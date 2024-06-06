@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import "../assest/Css/card.css";
 import { Loader } from "../Loader";
 import { baseUrl } from "../../Urls";
@@ -18,14 +16,12 @@ export const FeatchService = () => {
     try {
       setisLoading(true);
       const res = await axios.get(`${baseUrl}/services/service/` + id);
-      console.log(res.data.data);
       const responseData = Array.isArray(res.data.data)
         ? res.data.data
         : [res.data.data];
       setservice(responseData);
-      // await SetId(res.data.data._id);
     } catch (error) {
-      console.log(error);
+      alert(error);
     } finally {
       setisLoading(false);
     }
@@ -37,7 +33,6 @@ export const FeatchService = () => {
   const bookService = async () => {
     if (service.length === 0) {
       alert("Service data not loaded");
-      console.error("Service data not loaded");
       return;
     }
     const serviceproviderId = service[0]?.service_provider?._id;
@@ -51,31 +46,19 @@ export const FeatchService = () => {
       user: userId,
       Fees: amount,
     };
-    console.log("objOfService", objOfService);
 
     try {
       const res = await axios.post(
         `${baseUrl}/bookservices/bookservice`,
         objOfService
       );
-      console.log(res.data.data);
       if (res.status === 200) {
-        toast.info("Service Booked !", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-        console.log("Service Booked");
+        alert("Service Booked");
         await SetId(res.data.data._id);
         Navigate(`/payment/${res.data.data._id}`);
       }
     } catch (error) {
-      console.log("error");
+      alert("error");
     }
   };
   return (
@@ -84,18 +67,6 @@ export const FeatchService = () => {
         <Loader />
       ) : (
         <>
-          <ToastContainer
-            position="top-center"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="colored"
-          />
           <div className="service-list-container">
             {service.length === 0 ? (
               <div>Loading...</div>

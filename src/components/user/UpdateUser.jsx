@@ -3,8 +3,6 @@ import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { Loader } from "../Loader";
 import { baseUrl } from "../../Urls";
 
@@ -13,12 +11,7 @@ export const UpdateUser = () => {
   const [isLoading, setisLoading] = useState(false);
   const Navigate = useNavigate();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm({
+  const { register, handleSubmit, reset } = useForm({
     defaultValues: async () => {
       const res = await axios.get(`${baseUrl}/users/user/` + id);
       return {
@@ -26,7 +19,6 @@ export const UpdateUser = () => {
         Password: res.data.data.Password,
         Email: res.data.data.Email,
         Contact: res.data.data.Contact,
-        // role: res.data.data.Name,
       };
     },
   });
@@ -36,35 +28,26 @@ export const UpdateUser = () => {
   const submitHandler = async (data) => {
     try {
       setisLoading(true);
-      const res = await axios.put(
-        `${baseUrl}/users/user/` + id,
-        data
-      );
+      const res = await axios.put(`${baseUrl}/users/user/` + id, data);
       if (res.status === 200) {
-        toast.info(" User Updated Successfully!", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+        alert("User Updated Successfully!");
         reset();
         Navigate("/user/userlist");
-        console.log(res.data.data);
       }
     } catch (error) {
-      console.log(error);
+      alert(error);
     } finally {
       setisLoading(false);
     }
   };
 
   const loadRole = async () => {
+    try{
+
+    }catch(error){
+      alert(error)
+    }
     const res = await axios.get(`${baseUrl}/roles/role`);
-    console.log(res.data.data);
     setRole(res.data.data);
   };
 
@@ -78,18 +61,6 @@ export const UpdateUser = () => {
         <Loader />
       ) : (
         <>
-          <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="colored"
-          />
           <div className="auth-wrapper">
             <div className="auth-content">
               <div className="card">

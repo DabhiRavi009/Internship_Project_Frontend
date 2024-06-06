@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { TotalService } from "../serviceprovider/TotalService.jsx";
 import { Chart } from "../serviceprovider/Chart.jsx";
-import { Loader } from "../Loader";
 import { TotalBooking } from "../serviceprovider/TotalBooking.jsx";
 import { TotalFees } from "../serviceprovider/TotalAmount.jsx";
 import { DoneBooking } from "../serviceprovider/DoneBooking.jsx";
 
 export const ServiceProviderDashboard = () => {
-  const [isLoading, setisLoading] = useState(false);
 
   return (
     <>

@@ -2,8 +2,6 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { Loader } from "../Loader";
 import { baseUrl } from "../../Urls";
@@ -14,47 +12,34 @@ export const AddServiceProvider = () => {
   const [isLoading, setisLoading] = useState(false);
 
   const loadRole = async () => {
-    const res = await axios.get(`${baseUrl}/roles/role`);
-    console.log(res.data.data);
-    setRole(res.data.data);
+    try{
+      const res = await axios.get(`${baseUrl}/roles/role`);
+      setRole(res.data.data);
+    }catch(error){
+      alert(error)
+    }
   };
 
   useEffect(() => {
     loadRole();
   }, []);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { error },
-    reset,
-  } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   const submitHandler = async (data) => {
     try {
-      // console.log(data);
       setisLoading(true);
       const res = await axios.post(
         `${baseUrl}/serviceproviders/serviceprovider`,
         data
       );
-      console.log(res.data.data);
       if (res.status === 200) {
-        toast.info(" Service Provider Added Successfully !", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+        alert("Service Provider Added Successfully !");
         reset();
         Navigate("/admin/manageserviceprovider");
       }
     } catch (error) {
-      console.log(error);
+      alert(error);
     } finally {
       setisLoading(false);
     }
@@ -65,18 +50,6 @@ export const AddServiceProvider = () => {
         <Loader />
       ) : (
         <>
-          <ToastContainer
-            position="top-center"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="colored"
-          />
           <div className="auth-wrapper">
             <div className="auth-content">
               <div className="card">

@@ -11,29 +11,29 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import axios from "axios";
-import { Loader } from "../Loader";
 import { baseUrl } from "../../Urls";
 
 export const Chart = () => {
   const [services, setService] = useState([]);
-  const [isLoading, setisLoading] = useState(false);
 
-  const colors = ["#FFD1E3", "#FFFAB7", "#7BC9FF"]; // Define your colors
+  const colors = ["#FFD1E3", "#FFFAB7", "#7BC9FF"];
 
   const data = services?.map((serv, index) => ({
     name: serv.Service_Name,
     uv: Number(serv.Fees),
     pv: 1000,
     amt: Number(serv.Fees),
-    color: colors[index % colors.length], // Cycle through colors array
+    color: colors[index % colors.length],
   }));
 
   const loadService = async () => {
-    setisLoading(true);
-    const res = await axios.get(`${baseUrl}/services/service`);
-    console.log(res.data.data);
-    setService(res.data.data);
-    setisLoading(false);
+    try{
+      const res = await axios.get(`${baseUrl}/services/service`);
+      setService(res.data.data);
+    }
+    catch(error){
+      alert(error)
+    }
   };
 
   useEffect(() => {
@@ -71,7 +71,6 @@ export const Chart = () => {
             <YAxis />
             <Tooltip />
             <Legend />
-            {/* Use custom color from data */}
             <Bar dataKey="uv">
               {data.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={entry.color} />

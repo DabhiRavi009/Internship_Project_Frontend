@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import "./assest/Css/HomePage.css";
 import "./assest/Css/Responsive.css";
 import I1 from "./assest/Images/slider-img.png";
@@ -7,27 +7,11 @@ import I3 from "./assest/Images/professional-img.png";
 import I4 from "./assest/Images/s1.png";
 import I5 from "./assest/Images/s2.png";
 import I6 from "./assest/Images/s3.png";
-import I7 from "./assest/Images/client-1.jpg";
-import I8 from "./assest/Images/client-2.jpg";
-import I9 from "./assest/Images/client-1.jpg";
-import I10 from "./assest/Images/client-2.jpg";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { Loader } from "./Loader";
 
 export const HomePage = () => {
-  const [isLoading, setisLoading] = useState(false);
   const { register, handleSubmit } = useForm();
-
-  const Home = useRef();
-  const About = useRef();
-  const Contact = useRef();
-  const Service = useRef();
-
-  const scrollHandler = (elmRef) => {
-    console.log(elmRef.current);
-    window.scrollTo({ top: elmRef.current.offsetTop, behavior: "smooth" });
-  };
 
   const cards = [
     {
@@ -47,15 +31,10 @@ export const HomePage = () => {
     },
   ];
 
-  const submitHandler = (data) => {
-    setisLoading(true);
-    console.log(data);
-    setisLoading(false);
-  };
+  const submitHandler = (data) => {};
   return (
     <>
       <div className="hero_area">
-        {/* header section strats */}
         <header className="header_section">
           <div className="header_top">
             <div className="container-fluid">
@@ -73,84 +52,33 @@ export const HomePage = () => {
           </div>
           <div className="header_bottom">
             <div className="container-fluid">
-              <nav className="navbar navbar-expand-lg custom_nav-container ">
+              <span
+                style={{
+                  color: "#007bff",
+                  fontFamily: "Arial, sansSerif",
+                  fontSize: "24px",
+                  fontWeight: "bold",
+                }}
+              >
+                Local Service
+              </span>
+              <Link to="/login">
                 <span
                   style={{
                     color: "#007bff",
                     fontFamily: "Arial, sansSerif",
                     fontSize: "24px",
                     fontWeight: "bold",
+                    marginLeft: "30px",
                   }}
                 >
-                  Local Service
+                  Login
                 </span>
-                <div
-                  className="collapse navbar-collapse"
-                  id="navbarSupportedContent"
-                >
-                  <ul className="navbar-nav ">
-                    <div id="home">
-                      <li className="nav-item active">
-                        <Link
-                          className="nav-link"
-                          onClick={() => {
-                            scrollHandler(Home);
-                          }}
-                        >
-                          Home <span className="sr-only">(current)</span>
-                        </Link>
-                      </li>
-                    </div>
-                    <div id="about">
-                      <li className="nav-item">
-                        <Link
-                          className="nav-link"
-                          onClick={() => {
-                            scrollHandler(About);
-                          }}
-                        >
-                          About
-                        </Link>
-                      </li>
-                    </div>
-                    <div id="service">
-                      <li className="nav-item">
-                        <Link
-                          className="nav-link"
-                          onClick={() => {
-                            scrollHandler(Service);
-                          }}
-                        >
-                          Services
-                        </Link>
-                      </li>
-                    </div>
-                    <div id="contact">
-                      <li className="nav-item">
-                        <Link
-                          className="nav-link"
-                          onClick={() => {
-                            scrollHandler(Contact);
-                          }}
-                        >
-                          Contact Us
-                        </Link>
-                      </li>
-                    </div>
-                    <li className="nav-item">
-                      <Link className="nav-link" to="/login">
-                        Login
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-              </nav>
+              </Link>
             </div>
           </div>
         </header>
-        {/* end header section */}
-        {/* slider section */}
-        <section className="slider_section " ref={Home}>
+        <section className="slider_section ">
           <div className="container ">
             <div className="row">
               <div className="col-md-6 ">
@@ -178,9 +106,7 @@ export const HomePage = () => {
             </div>
           </div>
         </section>
-        {/* end slider section */}
       </div>
-      {/* feature section */}
       <section className="feature_section">
         <div className="container">
           <div className="feature_container">
@@ -241,9 +167,7 @@ export const HomePage = () => {
           </div>
         </div>
       </section>
-      {/* end feature section */}
-      {/* about section */}
-      <section className="about_section layout_padding-bottom" ref={About}>
+      <section className="about_section layout_padding-bottom">
         <div className="container">
           <div className="row">
             <div className="col-lg-5 col-md-6">
@@ -271,8 +195,6 @@ export const HomePage = () => {
           </div>
         </div>
       </section>
-      {/* end about section */}
-      {/* professional section */}
       <section className="professional_section layout_padding">
         <div className="container">
           <div className="row">
@@ -305,9 +227,7 @@ export const HomePage = () => {
           </div>
         </div>
       </section>
-      {/* end professional section */}
-      {/* service section */}
-      <section className="service_section layout_padding" ref={Service}>
+      <section className="service_section layout_padding">
         <div className="container ">
           <div className="heading_container heading_center">
             <h2> Our Services </h2>
@@ -337,11 +257,7 @@ export const HomePage = () => {
           </div>
         </div>
       </section>
-      {/* end service section */}
-      {/* client section */}
-      {/* end client section */}
-      {/* contact section */}
-      <section className="contact_section layout_padding" ref={Contact}>
+      <section className="contact_section layout_padding">
         <div className="container">
           <div className="heading_container">
             <h2>Contact Us</h2>
@@ -398,8 +314,6 @@ export const HomePage = () => {
           </div>
         </div>
       </section>
-      {/* end contact section */}
-      {/* info section */}
       <section className="info_section ">
         <div className="container">
           <h4 style={{ color: "white" }}>Get In Touch</h4>
@@ -445,8 +359,6 @@ export const HomePage = () => {
           </div>
         </div>
       </section>
-      {/* end info_section */}
-      {/* footer section */}
       <footer className="footer_section">
         <div className="container">
           <p>
@@ -455,7 +367,6 @@ export const HomePage = () => {
           </p>
         </div>
       </footer>
-      {/* footer section */}
     </>
   );
 };

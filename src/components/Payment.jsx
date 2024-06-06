@@ -1,11 +1,8 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { Loader } from "./Loader";
 import { baseUrl } from "../Urls";
-// import "../components/Payment.css";
 
 export const Payment = () => {
   const [bookservice, setBookService] = useState([]);
@@ -17,9 +14,8 @@ export const Payment = () => {
     try {
       setisLoading(true);
       const res = await axios.get(`${baseUrl}/bookservices/bookservice/` + id);
-      console.log(res.data.data);
     } catch (error) {
-      console.log(error);
+      alert(error);
     } finally {
       setisLoading(false);
     }
@@ -35,23 +31,13 @@ export const Payment = () => {
         Status: "Done",
       });
       if (res.status === 200) {
-        toast.info("Payment Done !", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-        console.log("Data Updated");
+        alert("Payment Done !");
         Navigate("../user/dashboard");
       } else {
-        console.log("Data not updated");
+        alert("Data not updated");
       }
     } catch (error) {
-      console.log("Error:", error);
+      alert("Error:", error);
     }
   };
 
@@ -61,18 +47,6 @@ export const Payment = () => {
         <Loader />
       ) : (
         <>
-          <ToastContainer
-            position="top-center"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="colored"
-          />
           <div className="service-list-container">
             <div className="container mt-5 px-5">
               <div className="mb-4">

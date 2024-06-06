@@ -1,22 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { baseUrl } from "../../Urls";
 
 export const DoneBooking = () => {
   const [done, setDone] = useState([]);
   const id = localStorage.getItem("Id");
-  const Navigate = useNavigate();
 
   const loadDoneStatus = async () => {
     try {
       const res = await axios.get(
         `${baseUrl}/bookservices/bookservice/donesp/${id}`
       );
-      console.log(res.data.data);
       setDone(res.data.data);
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
 
@@ -42,7 +39,7 @@ export const DoneBooking = () => {
               return (
                 <>
                   <tr>
-                    <td scope="row">{done.ServiceId.Service_Name}</td>
+                    <td>{done.ServiceId.Service_Name}</td>
                     <td>{done.Fees}</td>
                     <td>
                       <button className="btn btn-success">{done.Status}</button>

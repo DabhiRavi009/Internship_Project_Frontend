@@ -5,7 +5,6 @@ import { Login } from "./components/Login";
 import { ServiceProviderDashboard } from "./components/serviceprovider/ServiceProviderDashboard";
 import { AddService } from "./components/serviceprovider/AddService";
 import { UserDashboard } from "./components/user/UserDashboard";
-import { Navbar } from "./components/Navbar";
 import { SignUp } from "./components/SignUp";
 import { ProtectedRoutes } from "./components/hooks/ProtectedRoutes";
 import { ServiceList } from "./components/serviceprovider/ServiceList";
@@ -56,12 +55,6 @@ function App() {
         path === "/signup" ? null : (
           <Sidebar />
         )}
-        {/* {path === "/" ||
-        path === "/login" ||
-        path === "" ||
-        path === "/signup" ? null : (
-          <Navbar />
-        )} */}
       </div>
       <div className="pcoded-content">
         <div className="pcoded-inner-content">
@@ -73,7 +66,6 @@ function App() {
             <Route path="/resetpassword" element={<ResetPassword />}></Route>
             <Route path="/forgotpassword" element={<ForgotPassword />}></Route>
             <Route element={<ProtectedRoutes />}>
-              //admin
               <Route
                 path="/admin/adminbookedservice"
                 element={<BookedServiceAdmin />}
@@ -99,7 +91,6 @@ function App() {
                 path="/admin/dashboard"
                 element={<AdminDashboard />}
               ></Route>
-              {/* <Route path="/admin/addservice" element={<AddService />}></Route> */}
               <Route
                 path="/admin/manageservice"
                 element={<ManageService />}
@@ -109,7 +100,6 @@ function App() {
                 element={<ManageServiceProvider />}
               ></Route>
               <Route path="/admin/manageuser" element={<ManageUser />}></Route>
-              //Service Provider
               <Route
                 path="/serviceprovider/dashboard"
                 element={<ServiceProviderDashboard />}
@@ -159,7 +149,6 @@ function App() {
                 path="/serviceprovider/serviceproviderupdate/:id"
                 element={<UpdateServiceProvider />}
               ></Route>
-              //user
               <Route path="/user/dashboard" element={<UserDashboard />}></Route>
               <Route path="/user/profile" element={<UserProfile />}></Route>
               <Route

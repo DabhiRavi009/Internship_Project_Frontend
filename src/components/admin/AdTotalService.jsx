@@ -1,15 +1,11 @@
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "../assest/Css/BookedService.css";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { Loader } from "../Loader";
 import { baseUrl } from "../../Urls";
 
 export const AdTotalService = () => {
   const [service, setService] = useState([]);
-  const id = localStorage.getItem("Id");
   const navigate = useNavigate();
 
   const loadServices = async () => {
@@ -17,7 +13,7 @@ export const AdTotalService = () => {
       const res = await axios.get(`${baseUrl}/services/service`);
       setService(res.data.data);
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
 
@@ -26,8 +22,11 @@ export const AdTotalService = () => {
   }, []);
 
   const handleCardClick = () => {
-    navigate("../admin/manageservice");
-    console.log("function run");
+    try {
+      navigate("../admin/manageservice");
+    } catch (error) {
+      alert(error);
+    }
   };
 
   return (

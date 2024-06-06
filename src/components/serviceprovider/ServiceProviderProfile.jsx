@@ -52,7 +52,6 @@ export const ServiceProviderProfile = () => {
       );
       if (res.data && typeof res.data.data === "object") {
         setspData(res.data.data);
-        // setLoading(false);
         setValue("Name", res.data.data.Name);
         setValue("Contact", res.data.data.Contact);
         setValue("Email", res.data.data.Email);
@@ -82,7 +81,7 @@ export const ServiceProviderProfile = () => {
         getServiceProvider();
       }
     } catch (error) {
-      console.log("Error", error);
+      alert("Error", error);
     }
   };
 
@@ -104,7 +103,6 @@ export const ServiceProviderProfile = () => {
                 }}
               >
                 <Grid container spacing={4}>
-                  {/* Existing Profile Card Section */}
                   <Grid item xs={12} sm={3}>
                     <Paper
                       elevation={3}

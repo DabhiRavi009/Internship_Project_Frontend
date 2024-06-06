@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { Loader } from "../Loader";
 import { baseUrl } from "../../Urls";
@@ -17,10 +15,9 @@ export const ServiceProviderList = () => {
       const res = await axios.get(
         `${baseUrl}/serviceproviders/serviceprovider`
       );
-      console.log(res.data.data);
       setServiceProvider(res.data.data);
     } catch (error) {
-      console.log(error);
+      alert(error);
     } finally {
       setisLoading(false);
     }
@@ -32,20 +29,11 @@ export const ServiceProviderList = () => {
         `${baseUrl}/serviceproviders/serviceprovider/` + id
       );
       if (res.status === 200) {
-        toast.info("Service Provider Deleted Successfully!", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+        alert("Service Provider Deleted Successfully!");
         loadServiceProvider();
       }
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
 
@@ -58,18 +46,6 @@ export const ServiceProviderList = () => {
         <Loader />
       ) : (
         <>
-          <ToastContainer
-            position="top-center"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="colored"
-          />
           <div className="service-list-container">
             <table className="table table-striped">
               <thead>
